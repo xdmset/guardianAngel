@@ -3,17 +3,19 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: var(--secondary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   padding: 1rem;
 }
 
 .loginBox {
   background-color: var(--base-white);
   padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
   width: 100%;
   max-width: 450px;
+  position: relative;
+  z-index: 1;
 }
 
 .header {
@@ -22,19 +24,15 @@
 }
 
 .logo {
-  max-width: 180px;
+  max-width: 120px;
   height: auto;
   display: block;
-  margin: 0 auto 1.5rem auto;
+  margin: 0 auto 0.5rem auto;
 }
 
-.credentials {
-  margin-top: 1.5rem;
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
-.credentials p {
-  margin: 4px 0;
+.loginTitle {
+  color: var(--text-dark);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
 }

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import styles from './LoginForm.module.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('guardian@guardianangel.com');
+  const [password, setPassword] = useState('******');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = (e) => {
@@ -33,18 +35,37 @@ const LoginForm = () => {
           required
         />
       </div>
+
       <div className={styles.inputGroup}>
-        <label htmlFor="password">Contraseña</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <label htmlFor="password">Password</label>
+        <div className={styles.passwordInputContainer}>
+          <input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className={styles.togglePasswordVisibility}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
       </div>
+
+      <div className={styles.options}>
+        <label className={styles.rememberMe}>
+          <input type="checkbox" />
+          Remember me
+        </label>
+        <a href="#" className={styles.forgotPassword}>Forgot Password?</a>
+      </div>
+
       <button type="submit" className={styles.submitButton}>
-        Iniciar Sesión
+        Log In
       </button>
     </form>
   );

@@ -1,21 +1,17 @@
 import React from 'react';
 import LoginForm from '../components/auth/LoginForm';
 import styles from './LoginPage.module.css';
-import logo from '../assets/logomercy.png'; 
+import logo from '../assets/logomercy.png';
 
 const LoginPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.loginBox}>
         <div className={styles.header}>
-    
           <img src={logo} alt="Logo de GuardianAngel" className={styles.logo} />
+          <h1 className={styles.loginTitle}>Login</h1> 
         </div>
         <LoginForm />
-        <div className={styles.credentials}>
-          <p>Admin: admin@guardianangel.com / admin</p>
-          <p>Cuidador: cuidador@guardianangel.com / cuidador</p>
-        </div>
       </div>
     </div>
   );

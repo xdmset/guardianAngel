@@ -1,7 +1,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
 
 .inputGroup {
@@ -10,14 +10,15 @@
 }
 
 .inputGroup label {
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
   color: var(--text-dark);
+  font-size: 0.95rem;
 }
 
 .inputGroup input {
   padding: 0.8rem 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -25,25 +26,25 @@
 
 .inputGroup input:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(237, 146, 99, 0.2);
+  border-color: var(--tertiary);
+  box-shadow: 0 0 0 2px rgba(36, 90, 178, 0.2);
 }
 
 .submitButton {
   padding: 1rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   border: none;
-  border-radius: 8px;
-  background-color: var(--primary);
+  border-radius: 10px;
+  background-color: var(--tertiary);
   color: var(--base-white);
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .submitButton:hover {
-  background-color: #d67c50;
+  background-color: #1e4a99;
 }
 
 .error {
@@ -54,4 +55,58 @@
   border-radius: 8px;
   text-align: center;
   margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.rememberMe {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-light);
+}
+
+.rememberMe input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--tertiary);
+}
+
+.forgotPassword {
+  color: var(--tertiary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
+}
+
+.passwordInputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.passwordInputContainer input {
+  flex-grow: 1;
+  padding-right: 3rem;
+}
+.togglePasswordVisibility {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+.togglePasswordVisibility:hover {
+  color: var(--tertiary);
 }
