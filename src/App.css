@@ -1,9 +1,28 @@
+:root {
+  /* Paleta principal */
+  --primary: #ED9263;       /* Naranja principal cálido */
+  --secondary: #8ED6CB;     /* Verde agua suave */
+  --accent: #245AB2;        /* Azul profundo de contraste */
+  --background: #FFFFFF;    /* Fondo base */
+  --title-color: #018061;   /* Verde oscuro para títulos */
+
+  /* Texto */
+  --text-color: #333333;
+  --muted-text: #6B7280;
+
+  /* Estética */
+  --border-radius: 14px;
+  --transition: 0.3s ease;
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
+
 
 .logo {
   height: 6em;

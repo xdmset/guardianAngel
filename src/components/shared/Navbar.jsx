@@ -1,32 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import styles from './Navbar.module.css'; // <-- Importa los estilos
+import styles from './Navbar.module.css';
+import kidIcon from '../../assets/header/kiddo.png';
+
+
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
-        <NavLink to="/" className={styles.brand}>GuardianAngel</NavLink>
-        <div className={styles.navLinks}>
+        {/* Marca */}
+        <NavLink to="/" className={styles.brand}>
+          Guardian Angel
+        </NavLink>
+
+        {/* Botón hamburguesa para móvil */}
+        <button className={styles.menuToggle} onClick={toggleMenu}>
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
+        {/* Links */}
+        <div className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
           <NavLink
             to="/cuidador/dashboard"
-            className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}
+            className={({ isActive }) =>
+              isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+            }
           >
-            Mis Niños
+            <img src={kidIcon} alt="Logo de Kid" className={styles.kiddo} /> Mis Niños
           </NavLink>
+          <button onClick={handleLogout} className={styles.logoutButton}>
+            Cerrar Sesión
+          </button>
         </div>
-        <button onClick={handleLogout} className={styles.logoutButton}>
-          Cerrar Sesión
-        </button>
       </div>
     </nav>
   );

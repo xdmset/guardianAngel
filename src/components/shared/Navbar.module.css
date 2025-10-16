@@ -1,45 +1,75 @@
+/* ----------------------- Navbar base ------------------ */
 .navbar {
-  background-color: var(--tertiary);
+  background-color: var(--tertiary); /* tu color */
   color: var(--base-white);
+  position: fixed;   /* pegado arriba */
+  top: 0;            /* pegado al top */
+  left: 0;           /* pegado al lado izquierdo */
+  width: 100%;       /* ocupa todo el ancho */
+  height: 70px;      /* altura del navbar */
+  display: flex;
+  align-items: center;
+  z-index: 1000;     /* para que esté por encima de otros elementos */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 0 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
+/* ----------------------- Contenedor ------------------ */
 .container {
-  width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* logo a la izquierda, links a la derecha */
   align-items: center;
+  width: 100%;
 }
 
+/* ----------------------- Marca / Logo ------------------ */
 .brand {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--base-white);
   text-decoration: none;
 }
 
+/* ----------------------- Botón hamburguesa ------------------ */
+.menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--base-white);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.menuToggle:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* ----------------------- Links ------------------ */
 .navLinks {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
+  transition: all 0.3s ease;
 }
 
+/* Links individuales */
 .navLink {
-  color: #ccc;
+  color: #ffffffcc;
   text-decoration: none;
   font-size: 1rem;
-  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
   border-bottom: 2px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
+  gap: 0.5rem;
 }
 
 .navLink:hover {
   color: var(--base-white);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
 }
 
 .navLink.active {
@@ -47,17 +77,78 @@
   border-bottom-color: var(--primary);
 }
 
+/* Icono del niño */
+.kiddo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* border: 2px solid var(--primary); */
+  filter: brightness(0) invert(1);
+}
+
+
+/* Botón Cerrar Sesión */
 .logoutButton {
   background-color: var(--primary);
   color: var(--base-white);
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 0.6rem 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
 .logoutButton:hover {
-  background-color: #d67c50;
+  background-color: #018061;
+  transform: translateY(-2px);
+  transition: all 0.2s;
+}
+
+/* ----------------------- Responsive Móvil ------------------ */
+@media (max-width: 768px) {
+  .menuToggle {
+    display: block;
+  }
+
+  .navLinks {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background-color: var(--tertiary);
+    gap: 1rem;
+    padding: 1rem 2rem;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .navLinks.showMenu {
+    max-height: 500px;
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+
+  .logoutButton {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ----------------------- Pequeños móviles ------------------ */
+@media (max-width: 480px) {
+  .brand {
+    font-size: 1.3rem;
+  }
+
+  .kiddo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .navLink {
+    font-size: 0.95rem;
+  }
 }

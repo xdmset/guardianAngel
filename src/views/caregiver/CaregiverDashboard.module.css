@@ -1,5 +1,5 @@
 .pageContainer {
-  padding: 2rem;
+  padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -14,18 +14,23 @@
   margin-bottom: 2rem;
 }
 
+/* Grid de tarjetas */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
+/* Tarjeta */
 .card {
+  display: flex;
+  align-items: center;
   background-color: var(--base-white);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
+  padding: 1rem;
 }
 
 .card:hover {
@@ -33,41 +38,119 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
+/* Imagen del niño */
 .cardImage {
-  width: 100%;
-  height: 200px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-}
-
-.cardBody {
-  padding: 1.5rem;
-}
-
-.cardTitle {
-  margin: 0 0 0.5rem 0;
-  color: var(--tertiary);
-}
-
-.cardInfo {
-  margin: 0 0 1.5rem 0;
-  color: var(--text-light);
-}
-
-.cardButton {
+  border-radius: 50%;
+  margin-right: 1rem;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 0.8rem;
+}
+
+/* Contenedor de info */
+.cardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Nombre del niño */
+.cardTitle {
+  margin: 0;
+  color: var(--tertiary);
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Información adicional */
+.cardInfo {
+  margin: 0.25rem 0 1rem 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botón de detalles */
+.cardButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1rem;
   text-decoration: none;
   color: var(--base-white);
   background-color: var(--primary);
   border: none;
   border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
+  white-space: nowrap; /* evita que el texto se divida en dos líneas */
 }
 
 .cardButton:hover {
   background-color: #d67c50;
+}
+
+/* ------------------ Responsive ------------------ */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    flex-direction: row;
+    padding: 0.8rem;
+  }
+
+  .cardImage {
+    width: 70px;
+    height: 70px;
+    margin-right: 0.8rem;
+  }
+
+  .cardTitle,
+  .cardInfo {
+    font-size: 1rem;
+  }
+
+  .cardButton {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex-direction: row;
+    padding: 0.6rem;
+  }
+
+  .cardImage {
+    width: 60px;
+    height: 60px;
+    margin-right: 0.6rem;
+  }
+
+  .cardTitle {
+    font-size: 0.95rem;
+  }
+
+  .cardInfo {
+    font-size: 0.85rem;
+  }
+
+  .cardButton {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.7rem;
+  }
 }
