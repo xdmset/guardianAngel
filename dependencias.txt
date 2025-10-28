@@ -1,0 +1,2 @@
+//Para index.jsx
+npm install framer-motion

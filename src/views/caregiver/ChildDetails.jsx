@@ -1,11 +1,9 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FaPlus, FaCalendarAlt, FaPhone } from 'react-icons/fa';
+import { FaPlus, FaCalendarAlt, FaPhone, FaUtensils, FaGamepad } from 'react-icons/fa';
 import { FaHeartPulse, FaTemperatureThreeQuarters } from 'react-icons/fa6'; 
 import styles from './ChildDetails.module.css'; 
 
-
-// Datos simulados
 const childData = {
   '1': { name: 'Ana', lastName: 'García', temperature: 36.8, heartRate: 95 },
   '2': { name: 'Luis', lastName: 'Martinez', temperature: 37.6, heartRate: 102 },
@@ -32,9 +30,8 @@ const ChildDetails = () => {
 
   return (
     <div className={styles.container}>
-      <br />
       <Link to="/cuidador/dashboard" className={styles.backButton}>Volver</Link>
-      <br /><br />
+
       <header className={styles.header}>
         <div className={styles.childInfo}>
           <div className={styles.avatar}>
@@ -54,12 +51,13 @@ const ChildDetails = () => {
 
       <main className={styles.contentGrid}>
         <div className={styles.leftColumn}>
+          {/* Notas del Día */}
           <section className={styles.card}>
             <h2 className={styles.sectionTitle}>Notas del Día</h2>
             <p>Ana comió bien, participó en juegos grupales y durmió una siesta de 1 hora.</p>
           </section>
-          <br />
 
+          {/* Información de Salud */}
           <section className={styles.card}>
             <h2 className={styles.sectionTitle}>Información de Salud</h2>
             <div className={styles.healthGrid}>
@@ -77,6 +75,26 @@ const ChildDetails = () => {
               </div>
             </div>
           </section>
+
+          {/* Actividades */}
+          <section className={styles.card}>
+            <h2 className={styles.sectionTitle}>Actividades</h2>
+            <ul className={styles.list}>
+              <li><FaGamepad style={{ color: '#245AB2' }} /> Juegos de construcción - 30 min</li>
+              <li><FaGamepad style={{ color: '#245AB2' }} /> Pintura y creatividad - 20 min</li>
+              <li><FaGamepad style={{ color: '#245AB2' }} /> Canciones y movimiento - 15 min</li>
+            </ul>
+          </section>
+
+          {/* Alimentación */}
+          <section className={styles.card}>
+            <h2 className={styles.sectionTitle}>Alimentación</h2>
+            <ul className={styles.list}>
+              <li><FaUtensils style={{ color: '#8ED6CB' }} /> Desayuno: Fruta y cereal</li>
+              <li><FaUtensils style={{ color: '#8ED6CB' }} /> Almuerzo: Sopa y arroz</li>
+              <li><FaUtensils style={{ color: '#8ED6CB' }} /> Merienda: Yogur</li>
+            </ul>
+          </section>
         </div>
 
         <aside className={`${styles.card} ${styles.contactCard}`}>
@@ -89,7 +107,6 @@ const ChildDetails = () => {
         </aside>
       </main>
     </div>
-
   );
 };
 

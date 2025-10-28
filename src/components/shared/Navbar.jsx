@@ -23,7 +23,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         {/* Marca */}
-        <NavLink to="/" className={styles.brand}>
+        <NavLink to="/cuidador/index" className={styles.brand}>
           Guardian Angel
         </NavLink>
 
