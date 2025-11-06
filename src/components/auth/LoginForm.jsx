@@ -4,20 +4,24 @@ import styles from './LoginForm.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('guardian@guardianangel.com');
-  const [password, setPassword] = useState('******');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('admin123');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
-      login(email, password);
+      await login(username, password);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -26,12 +30,12 @@ const LoginForm = () => {
       {error && <p className={styles.error}>{error}</p>}
 
       <div className={styles.inputGroup}>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="username">Username</label>
         <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          id="username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
       </div>
@@ -64,8 +68,8 @@ const LoginForm = () => {
         <a href="#" className={styles.forgotPassword}>Forgot Password?</a>
       </div>
 
-      <button type="submit" className={styles.submitButton}>
-        Log In
+      <button type="submit" className={styles.submitButton} disabled={isLoading}>
+        {isLoading ? 'Cargando...' : 'Log In'}
       </button>
     </form>
   );
