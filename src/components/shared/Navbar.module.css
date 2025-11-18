@@ -1,16 +1,23 @@
 /* ----------------------- Navbar base ------------------ */
 .navbar {
-  background-color: var(--tertiary); /* tu color */
+  background-color: var(--tertiary);
+  /* tu color */
   color: var(--base-white);
-  position: fixed;   /* pegado arriba */
-  top: 0;            /* pegado al top */
-  left: 0;           /* pegado al lado izquierdo */
-  width: 100%;       /* ocupa todo el ancho */
-  height: 70px;      /* altura del navbar */
+  position: fixed;
+  /* pegado arriba */
+  top: 0;
+  /* pegado al top */
+  left: 0;
+  /* pegado al lado izquierdo */
+  width: 100%;
+  /* ocupa todo el ancho */
+  height: 70px;
+  /* altura del navbar */
   display: flex;
   align-items: center;
-  z-index: 1000;     /* para que esté por encima de otros elementos */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 1000;
+  /* para que esté por encima de otros elementos */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 0 2rem;
 }
 
@@ -19,7 +26,8 @@
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between; /* logo a la izquierda, links a la derecha */
+  justify-content: space-between;
+  /* logo a la izquierda, links a la derecha */
   align-items: center;
   width: 100%;
 }

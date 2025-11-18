@@ -8,6 +8,7 @@ import Navbar from '../components/shared/Navbar';
 import CaregiverDashboard from '../views/caregiver/CaregiverDashboard';
 import ChildDetails from '../views/caregiver/ChildDetails';
 import Index from '../views/caregiver/Index';
+import SmartwatchManagerPage from '../views/admin/SmartwatchManagerPage';
 
 const AppRouter = () => {
   const { user } = useAuth();
@@ -18,7 +19,7 @@ const AppRouter = () => {
       case 'admin': return '/admin/dashboard';
       case 'index': return '/cuidador/index';
       case 'caregiver': return '/cuidador/dashboard';
-      
+
       default: return '/login';
     }
   };
@@ -34,6 +35,7 @@ const AppRouter = () => {
             <Route path="/cuidador/index" element={<Index />} />
             <Route path="/cuidador/dashboard" element={<CaregiverDashboard />} />
             <Route path="/niño/:id" element={<ChildDetails />} />
+            <Route path="/admin/smartwatches" element={<SmartwatchManagerPage />} />
           </>
         )}
 
