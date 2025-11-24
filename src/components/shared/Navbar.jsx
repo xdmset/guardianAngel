@@ -19,6 +19,7 @@ const Navbar = () => {
     navigate('/login');
   };
 
+
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
@@ -26,12 +27,19 @@ const Navbar = () => {
       <div className={styles.container}>
         {/* Marca */}
        <NavLink
-        to="/cuidador/index"
+        to={
+          user?.role === "tutor"
+            ? "/tutor/index"
+            : user?.role === "caregiver"
+              ? "/cuidador/index"
+              : "/login" // fallback por si acaso
+        }
         className={styles.brand}
         onClick={closeMenu}
       >
         Guardian Angel
       </NavLink>
+
 
 
         {/* Botón hamburguesa para responsivenes del movil */}
@@ -41,15 +49,34 @@ const Navbar = () => {
 
         {/* Links */}
         <div className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
-          <NavLink
-            to="/cuidador/dashboard"
-            onClick={closeMenu}
-            className={({ isActive }) =>
-              isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-            }
-          >
-            <img src={kidIcon} alt="Logo de Kid" className={styles.kiddo} /> Mis Niños
-          </NavLink>
+          {/* Checa si el usuario es caregiver para mostrar esta opcion */}
+          {user?.role === "caregiver" && (
+            <NavLink
+              to="/cuidador/dashboard"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+              }
+            >
+              <img src={kidIcon} alt="Logo de Kid" className={styles.kiddo} /> Mis Niños
+            </NavLink>
+          )}
+
+          {/* checar si el user es tutor ---NO MANDA A NINGUN LADO AUN */}
+          {user?.role === "tutor" && (
+            <NavLink
+              to="/tutor/dashboard"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+              }
+            >
+              Mi Niño
+            </NavLink>
+
+          )}
+
+
           <button onClick={handleLogout} className={styles.logoutButton}>
             Cerrar Sesión
           </button>

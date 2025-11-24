@@ -10,32 +10,33 @@ const CaregiverDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const calculateAge = (birthDate) => {
-    const birth = new Date(birthDate);
-    const today = new Date();
+  // Función para calcular edad PRUEBAS
+  // const calculateAge = (birthDate) => {
+  //   const birth = new Date(birthDate);
+  //   const today = new Date();
 
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
+  //   let age = today.getFullYear() - birth.getFullYear();
+  //   const m = today.getMonth() - birth.getMonth();
 
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
-      age--;
-    }
-
-    return age;
-  };
+  //   if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+  //     age--;
+  //   }
+  //   return age;
+  // };
 
   useEffect(() => {
     const fetchChildren = async () => {
       try {
         setLoading(true);
+
         const token = localStorage.getItem("accessToken");
 
         const response = await fetch(
-          `http://127.0.0.1:5000/api/teachers/${user.id}/children`,
+          `http://127.0.0.1:5000/api/caregiver/${user.id}/children`,
           {
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
@@ -57,7 +58,8 @@ const CaregiverDashboard = () => {
     }
   }, [user]);
 
-  if (loading) return <p className={styles.pageTitle}>Cargando the niños...</p>;
+  // Loading y error
+  if (loading) return <p className={styles.pageTitle}>Cargando los niños...</p>;
   if (error) return <p className={styles.pageTitle}>{error}</p>;
 
   return (
@@ -70,6 +72,7 @@ const CaregiverDashboard = () => {
       <div className={styles.grid}>
         {children.map((child) => (
           <div key={child.id_child} className={styles.card}>
+            
             <img
               src={`https://i.pravatar.cc/300?u=${child.first_name}`}
               alt={child.first_name}
@@ -81,9 +84,9 @@ const CaregiverDashboard = () => {
                 {child.first_name} {child.last_name}
               </h3>
 
-              <p className={styles.cardInfo}>
+              {/* <p className={styles.cardInfo}>
                 Edad: {calculateAge(child.birth_date)} años
-              </p>
+              </p> */}
 
               <Link to={`/niño/${child.id_child}`} className={styles.cardButton}>
                 <FaBookMedical style={{ marginRight: '8px' }} />

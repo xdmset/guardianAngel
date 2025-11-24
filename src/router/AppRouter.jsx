@@ -44,6 +44,7 @@ const AppRouter = () => {
             <Route path="/cuidador/dashboard" element={<CaregiverDashboard />} />
             <Route path="/niño/:id" element={<ChildDetails />} />
             <Route path="/admin/smartwatches" element={<SmartwatchManagerPage />} />
+            
             <Route path="/tutor/index" element={<TutorIndex />} />
 
           </>

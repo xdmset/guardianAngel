@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const data = await response.json();
+    console.log("DATA DE LOGIN:", data);
     const accessToken = data.access_token;
     
     localStorage.setItem('accessToken', accessToken);
