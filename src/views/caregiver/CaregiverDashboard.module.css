@@ -1,148 +1,163 @@
+:root {
+  --primary: #FFBFA3;  
+  --primary-hover: #F3A88A;
+
+  --secondary: #6EC5E9;  
+  --tertiary: #A8E6A4;  
+
+  --bg-soft: #FFF7F2;
+  --bg-card: #FFFFFF;
+
+  --text-dark: #3D3D3D;
+  --text-light: #707070;
+
+  --soft-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* ------------------- Página general ------------------- */
+
 .pageContainer {
   padding: 1rem;
+  padding-top: 3%;
   max-width: 1200px;
   margin: 0 auto;
+  background-color: var(--bg-soft);
+  border-radius: 18px;
 }
 
 .pageTitle {
-  color: var(--tertiary);
-  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--secondary);
+  margin-bottom: 0.3rem;
 }
 
 .pageSubtitle {
+  text-align: center;
+  font-size: 1.1rem;
   color: var(--text-light);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
-/* Grid de tarjetas */
+/* ------------------- GRID ------------------- */
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.8rem;
 }
 
-/* Tarjeta */
+/* ------------------- Tarjeta de niño ------------------- */
+
 .card {
   display: flex;
   align-items: center;
-  background-color: var(--base-white);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  box-shadow: var(--soft-shadow);
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  padding: 1rem;
+  padding: 1.2rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 3px solid rgba(255, 191, 163, 0.3);
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
-/* Imagen del niño */
+/* Imagen circular con marco pastel */
 .cardImage {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   border-radius: 50%;
   margin-right: 1rem;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 4px solid var(--secondary);
+  background-color: white;
 }
 
-/* Contenedor de info */
+/* ------------------- Contenido card ------------------- */
+
 .cardBody {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
-/* Nombre del niño */
 .cardTitle {
   margin: 0;
-  color: var(--tertiary);
-  font-size: 1.1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-hover);
 }
 
-/* Información adicional */
 .cardInfo {
-  margin: 0.25rem 0 1rem 0;
+  margin: 0.3rem 0 1rem 0;
   color: var(--text-light);
   font-size: 0.95rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* Botón de detalles */
+/* ------------------- Botón detalles ------------------- */
+
 .cardButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.2rem;
   text-decoration: none;
-  color: var(--base-white);
-  background-color: var(--primary);
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  color: white;
+  background-color: var(--secondary);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
-  white-space: nowrap; /* evita que el texto se divida en dos líneas */
 }
 
 .cardButton:hover {
-  background-color: #d67c50;
+  background-color: #53b3db;
+  transform: scale(1.03);
 }
 
-/* ------------------ Responsive ------------------ */
+/* ------------------- Responsive ------------------- */
+
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
   }
 
   .card {
-    flex-direction: row;
-    padding: 0.8rem;
+    padding: 1rem;
   }
 
   .cardImage {
-    width: 70px;
-    height: 70px;
-    margin-right: 0.8rem;
+    width: 75px;
+    height: 75px;
   }
 
-  .cardTitle,
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
   .cardInfo {
-    font-size: 1rem;
-  }
-
-  .cardButton {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
   .card {
-    flex-direction: row;
-    padding: 0.6rem;
+    padding: 0.8rem;
   }
 
   .cardImage {
-    width: 60px;
-    height: 60px;
-    margin-right: 0.6rem;
+    width: 65px;
+    height: 65px;
   }
 
   .cardTitle {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .cardInfo {
@@ -151,6 +166,6 @@
 
   .cardButton {
     font-size: 0.8rem;
-    padding: 0.4rem 0.7rem;
+    padding: 0.5rem 0.8rem;
   }
 }

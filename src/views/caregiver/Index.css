@@ -1,149 +1,287 @@
-.index {
-  font-family: 'Poppins', sans-serif;
-  color: var(--text-color);
-  background-color: var(--background);
+/* PALETA */
+:root {
+  --primary: #ffb6a3;       /* Rosa pastel */
+  --secondary: #a5e7e3;     /* Turquesa pastel */
+  --accent: #7ba7f7;        /* Azul bebé */
+  --yellow: #ffe9a8;        /* Amarillo pastel */
+
+  --background: #fff8f3;
+  --card-bg: #ffffff;
+
+  --text-color: #4a4a4a;
+  --text-muted: #7b7b7b;
+
+  --radius: 22px;
+  --shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
-/* HERO */
-.hero {
-  background-color: var(--primary);
-  color: white;
-  text-align: center;
-  padding: 4rem 1rem;
+/* GLOBAL */
+body {
+  background: var(--background);
+  font-family: "Poppins", sans-serif;
+}
+
+.index {
+  overflow-x: hidden;
   width: 100%;
+}
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 4rem 2rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.3rem;
+  margin-bottom: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* NAV ESTILO INFANTIL */
+.nav {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav h3 {
+  margin: 0;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+/* HERO CON NUBES */
+.hero {
+  padding: 6rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(
+    145deg,
+    #fff8f3 0%,       
+    #ffe9a8 40%,        
+    #ffb6a3 100%        
+  );
+  color: var(--text-color);
+  position: relative;
+  overflow: hidden;
+  border-bottom-left-radius: 50% 10%;
+  border-bottom-right-radius: 50% 10%;
+}
+
+/* NUBES DECORATIVAS */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  background: rgba(255,255,255,0.35);
+  width: 180px;
+  height: 80px;
+  border-radius: 100px;
+  filter: blur(4px);
+}
+.hero::before {
+  top: 20px;
+  left: 10%;
+}
+.hero::after {
+  bottom: 20px;
+  right: 15%;
 }
 
 .hero-title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
 }
 
 .hero-title span {
-  color: var(--accent);
-  font-weight: bold;
+  color: #4c4c4c;
 }
 
 .hero-subtitle {
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto 2rem;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  opacity: 0.95;
 }
 
-/* BOTÓN NIÑOS */
-.children-section {
-  background-color: var(--secondary);
-  padding: 3rem 1rem;
-}
-
-.children-btn {
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: var(--border-radius);
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.children-btn:hover {
-  background-color: var(--title-color);
-}
-
-/* INFORMACIÓN DEL PROYECTO */
-.project-info {
-  padding: 3rem 1rem;
-}
-
+/* TARJETAS DE INFORMACIÓN TIPO “BABY-CARD” */
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
 }
 
 .info-card {
-  background-color: #f4f4f4;
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
-  text-align: left;
+  transition: 0.3s ease;
+  border: 3px dashed var(--primary);
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
 }
 
 .info-card h3 {
-  color: var(--title-color);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
 }
 
-/* BENEFICIOS */
+.info-card p {
+  color: var(--text-muted);
+}
+
+/* BENEFICIOS estilo guardería */
 .benefits {
-  background-color: var(--primary);
+  background: var(--accent);
   color: white;
-  padding: 3rem 1rem;
-}
-
-.benefit-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  text-align: center;
+  border-top-left-radius: 50% 10%;
+  border-top-right-radius: 50% 10%;
 }
 
 .benefit-card {
-  background-color: rgba(255,255,255,0.15);
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
+  background: rgba(255, 255, 255, 0.25);
+  padding: 2rem;
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
   box-shadow: var(--shadow);
+  transition: 0.3s ease;
+  border: 2px solid rgba(255,255,255,0.4);
 }
 
 .benefit-card:hover {
+  transform: translateY(-6px);
+}
+
+/* ALERTAS estilo sticky-notes */
+.alert-card {
+  background: var(--yellow);
+  padding: 1.6rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border-left: 10px solid var(--primary);
+  font-weight: 500;
+  transition: 0.25s ease;
+}
+
+.alert-card:hover {
+  transform: rotate(1deg) translateY(-4px);
+}
+
+/* BENEFITS GRID - RESPONSIVE */
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Desktop */
+  gap: 2rem; /* Espaciado entre tarjetas */
+  margin-top: 2rem;
+}
+
+/* Cada tarjeta */
+.benefit-card {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 2rem;
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+  border: 2px solid rgba(255,255,255,0.4);
+  text-align: center;
+}
+
+/* Ícono */
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 1024px) {
+  .benefit-grid {
+    grid-template-columns: repeat(2, 1fr); /* Tablet */
+  }
+}
+
+@media (max-width: 600px) {
+  .benefit-grid {
+    grid-template-columns: 1fr; /* Celular */
+  }
+}
+
+/* --------------- ALERTS SECTION */
+
+.alertas-section {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+/* Grid responsivo */
+.features-grid {
+  display: grid;
+  gap: 25px;
+  padding: 0 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* Tarjetas */
+.feature-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
   transform: translateY(-4px);
 }
 
-/* ALERTAS / RECOMENDACIONES */
-.alerts-section {
-  padding: 3rem 1rem;
+/* Íconos */
+.feature-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
 }
 
-.alerts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+/* Texto */
+.feature-text {
+  font-size: 16px;
+  color: #444;
 }
 
-.alert-card {
-  background-color: #FFD6A5;
-  padding: 1rem 1.2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  font-weight: 500;
-}
-
-/* FOOTER */
-.footer {
-  background-color: var(--accent);
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  width: 100%;
-}
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .hero {
-    padding: 3rem 1rem;
-  }
-
   .hero-title {
-    font-size: 1.6rem;
+    font-size: 2.4rem;
   }
-
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-
-  section {
-    padding: 2rem 1rem;
+  .section-title {
+    font-size: 1.8rem;
   }
 }

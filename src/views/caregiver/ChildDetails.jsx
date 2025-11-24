@@ -1,45 +1,95 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FaPlus, FaCalendarAlt, FaPhone, FaUtensils, FaGamepad } from 'react-icons/fa';
-import { FaHeartPulse, FaTemperatureThreeQuarters } from 'react-icons/fa6'; 
-import styles from './ChildDetails.module.css'; 
-
-const childData = {
-  '1': { name: 'Ana', lastName: 'García', temperature: 36.8, heartRate: 95 },
-  '2': { name: 'Luis', lastName: 'Martinez', temperature: 37.6, heartRate: 102 },
-};
+import { FaPlus, FaCalendarAlt, FaUtensils, FaGamepad } from 'react-icons/fa';
+import { FaHeartPulse, FaTemperatureThreeQuarters } from 'react-icons/fa6';
+import styles from './ChildDetails.module.css';
+import apiConfig from '../../config/apiConfig';
 
 const ChildDetails = () => {
   const { id } = useParams();
-  const child = childData[id];
+  const [child, setChild] = useState(null);
+  const [tutor, setTutor] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!child) {
-    return (
-      <div className={styles.container}>
-        <h2>Niño no encontrado</h2>
-        <Link to="/cuidador/dashboard">Volver al listado</Link>
-      </div>
-    );
-  }
+  const [heartRate, setHeartRate] = useState(null);
+  const [temperature, setTemperature] = useState(null);
+  const [oxygenation, setOxygenation] = useState(null);
 
-  const getTempStatus = (temp) => {
-    if (temp > 37.5) return styles.tempHigh;
-    if (temp < 36.0) return styles.tempLow;
-    return styles.tempNormal;
-  };
+  const [pulse, setPulse] = useState(false);
+  const [flashTemp, setFlashTemp] = useState(false);
+  const [oxygenAnim, setOxygenAnim] = useState(false);
+
+  useEffect(() => {
+    const loadChild = async () => {
+      const res = await fetch(`${apiConfig.baseUrl}${apiConfig.endpoints.children}${id}`);
+      const data = await res.json();
+      setChild(data);
+      setLoading(false);
+    };
+    loadChild();
+  }, [id]);
+
+  useEffect(() => {
+    const loadTutor = async () => {
+      const res = await fetch(`${apiConfig.baseUrl}${apiConfig.endpoints.children}${id}/tutor`);
+      setTutor(await res.json());
+    };
+    loadTutor();
+  }, [id]);
+
+  useEffect(() => {
+    if (!child?.id_smartwatch) return;
+
+    const fetchReadings = async () => {
+      try {
+        const res = await fetch(`${apiConfig.baseUrl}readings/smartwatch/${child.id_smartwatch}/latest`);
+        const data = await res.json();
+
+        setHeartRate(data.heart_rate?.beats_per_minute || 0);
+        setTemperature(parseFloat(data.temperature?.temperature || 0));
+        setOxygenation(parseFloat(data.oxygenation?.spo2_level || 0));
+
+        setPulse(true);
+        setFlashTemp(true);
+        setOxygenAnim(true);
+
+        setTimeout(() => setPulse(false), 400);
+        setTimeout(() => setFlashTemp(false), 500);
+        setTimeout(() => setOxygenAnim(false), 700);
+      } catch (err) {
+        console.log('Error fetching readings:', err);
+      }
+    };
+
+    fetchReadings();
+    const interval = setInterval(fetchReadings, 3000);
+    return () => clearInterval(interval);
+  }, [child]);
+
+  if (loading) return <h2>Cargando datos...</h2>;
+
+  // const tempColor = temperature > 37.5
+  //   ? styles.tempHigh
+  //   : temperature < 36
+  //   ? styles.tempLow
+  //   : styles.tempNormal;
 
   return (
     <div className={styles.container}>
-      <Link to="/cuidador/dashboard" className={styles.backButton}>Volver</Link>
+      <Link to="/cuidador/dashboard" className={styles.backButton}>⬅ Volver</Link>
 
+      {/* HEADER */}
       <header className={styles.header}>
         <div className={styles.childInfo}>
           <div className={styles.avatar}>
-            <img src={`https://ui-avatars.com/api/?name=${child.name}+${child.lastName}&background=245AB2&color=fff`} alt={child.name} />
+            <img 
+              src={`https://ui-avatars.com/api/?name=${child.first_name}&background=FFD1DC&color=555`} 
+              alt={child.first_name} 
+            />
           </div>
           <div>
-            <h1 className={styles.childName}>{child.name} {child.lastName}</h1>
-            <p className={styles.subtitle}>Información general del menor</p>
+            <h1 className={styles.childName}>{child.first_name} {child.last_name}</h1>
+            <p>¡Bienvenido a su día en la guardería!</p>
           </div>
         </div>
 
@@ -49,62 +99,90 @@ const ChildDetails = () => {
         </div>
       </header>
 
-      <main className={styles.contentGrid}>
-        <div className={styles.leftColumn}>
-          {/* Notas del Día */}
+      {/* GRID PRINCIPAL */}
+      <main className={styles.mainGrid}>
+
+        {/* ------------ COLUMNA IZQUIERDA ------------ */}
+        <div className={styles.mainLeft}>
+
           <section className={styles.card}>
             <h2 className={styles.sectionTitle}>Notas del Día</h2>
-            <p>Ana comió bien, participó en juegos grupales y durmió una siesta de 1 hora.</p>
+            <p>{child.first_name} tuvo un día muy activo y alegre.</p>
           </section>
 
-          {/* Información de Salud */}
           <section className={styles.card}>
-            <h2 className={styles.sectionTitle}>Información de Salud</h2>
+            <h2 className={styles.sectionTitle}>🩺 Estado de Salud</h2>
+
             <div className={styles.healthGrid}>
+              
               <div className={styles.healthCard}>
                 <h3>Ritmo Cardíaco</h3>
                 <p className={styles.healthReading}>
-                  <FaHeartPulse style={{ color: '#ED9263' }} /> {child.heartRate} LPM
+                  <FaHeartPulse className={`${styles.icon} ${pulse ? styles.heartBeat : ''}`} />
+                  {heartRate ? `${heartRate} LPM` : '—'}
                 </p>
+
               </div>
-              <div className={styles.healthCard}>
+
+              <div className={`${styles.healthCard} ${flashTemp ? styles.flash : ''}`}>
                 <h3>Temperatura</h3>
-                <p className={`${styles.healthReading} ${getTempStatus(child.temperature)}`}>
-                  <FaTemperatureThreeQuarters /> {child.temperature}°C
+                <p className={styles.healthReading}>
+                  <FaTemperatureThreeQuarters className={`${styles.icon} ${flashTemp ? styles.tempFlash : ''}`} />
+                  {temperature ? `${temperature.toFixed(1)}°C` : '—'}
                 </p>
+
+
               </div>
+
+              {/* <div className={`${styles.healthCard} ${oxygenAnim ? styles.oxygenPulse : ''}`}>
+                <h3>Oxigenación</h3>
+                <p className={styles.healthReading}>
+                  <span className={`${styles.icon} ${oxygenAnim ? styles.oxygenPulse : ''}`}>💨</span>
+                  {oxygenation ? `${oxygenation.toFixed(1)}%` : '—'}
+                </p>
+
+              </div> */}
+
             </div>
           </section>
 
-          {/* Actividades */}
           <section className={styles.card}>
-            <h2 className={styles.sectionTitle}>Actividades</h2>
+            <h2 className={styles.sectionTitle}>🎨 Actividades</h2>
             <ul className={styles.list}>
-              <li><FaGamepad style={{ color: '#245AB2' }} /> Juegos de construcción - 30 min</li>
-              <li><FaGamepad style={{ color: '#245AB2' }} /> Pintura y creatividad - 20 min</li>
-              <li><FaGamepad style={{ color: '#245AB2' }} /> Canciones y movimiento - 15 min</li>
+              <li><FaGamepad /> Juegos de construcción – 30 min</li>
+              <li><FaGamepad /> Pintura y creatividad – 20 min</li>
+              <li><FaGamepad /> Canciones y movimiento – 15 min</li>
             </ul>
           </section>
 
-          {/* Alimentación */}
-          <section className={styles.card}>
-            <h2 className={styles.sectionTitle}>Alimentación</h2>
-            <ul className={styles.list}>
-              <li><FaUtensils style={{ color: '#8ED6CB' }} /> Desayuno: Fruta y cereal</li>
-              <li><FaUtensils style={{ color: '#8ED6CB' }} /> Almuerzo: Sopa y arroz</li>
-              <li><FaUtensils style={{ color: '#8ED6CB' }} /> Merienda: Yogur</li>
-            </ul>
-          </section>
         </div>
 
-        <aside className={`${styles.card} ${styles.contactCard}`}>
-          <h2 className={styles.sectionTitle}>Contacto del Padre</h2>
-          <p><strong>Nombre:</strong> Carlos García</p>
-          <p><strong>Teléfono:</strong> 555-123-4567</p>
-          <a href="tel:555-123-4567" className={styles.contactButton}>
-            <FaPhone /> Contactar
-          </a>
+        {/* ------------ COLUMNA DERECHA (Tutor + Alimentación) ------------ */}
+        <aside className={styles.tutorColumn}>
+
+          <section className={`${styles.card} ${styles.tutorCard}`}>
+            <h2 className={styles.sectionTitle}>Tutor</h2>
+            {tutor ? (
+              <>
+                <p><strong>Nombre:</strong> {tutor.first_name} {tutor.last_name}</p>
+                <p><strong>Correo:</strong> {tutor.email}</p>
+              </>
+            ) : (
+              <p>No hay tutor registrado.</p>
+            )}
+          </section>
+
+          <section className={styles.card}>
+            <h2 className={styles.sectionTitle}>🍽 Alimentación</h2>
+            <ul className={styles.list}>
+              <li><FaUtensils /> Desayuno: Fruta y cereal</li>
+              <li><FaUtensils /> Almuerzo: Sopa y arroz</li>
+              <li><FaUtensils /> Merienda: Yogur</li>
+            </ul>
+          </section>
+
         </aside>
+
       </main>
     </div>
   );

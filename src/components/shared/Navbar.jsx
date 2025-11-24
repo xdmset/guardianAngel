@@ -11,6 +11,8 @@ const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
+
 
   const handleLogout = () => {
     logout();
@@ -23,11 +25,16 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         {/* Marca */}
-        <NavLink to="/cuidador/index" className={styles.brand}>
-          Guardian Angel
-        </NavLink>
+       <NavLink
+        to="/cuidador/index"
+        className={styles.brand}
+        onClick={closeMenu}
+      >
+        Guardian Angel
+      </NavLink>
 
-        {/* Botón hamburguesa para móvil */}
+
+        {/* Botón hamburguesa para responsivenes del movil */}
         <button className={styles.menuToggle} onClick={toggleMenu}>
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
@@ -36,6 +43,7 @@ const Navbar = () => {
         <div className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
           <NavLink
             to="/cuidador/dashboard"
+            onClick={closeMenu}
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
             }

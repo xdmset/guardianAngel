@@ -1,221 +1,251 @@
 @import '../../App.css';
 
-/* -------------------- Layout general ---------- */
+/* -------------------- Contenedor general ---------- */
 .container {
-  max-width: 1100px;
+  max-width: 1150px;
   margin: 2rem auto;
   padding: 1.5rem;
   font-family: 'Poppins', 'Inter', sans-serif;
   color: #2b2b2b;
-  background-color: #fff;
-  text-align: left;
+  background-color: #fdfdfd;
 }
 
-/* -------------------- Header ---------- */
+/* -------------------- Header Infantil ---------- */
 .header {
-  background: linear-gradient(90deg, #245AB2 0%, #8ED6CB 100%);
-  color: #fff;
-  padding: 1.5rem 2rem;
-  border-radius: 20px;
+  background: linear-gradient(90deg, #FFCFDF 0%, #F9F7C9 100%);
+  color: #5b4a4a;
+  padding: 2rem;
+  border-radius: 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1.5rem;
   flex-wrap: wrap;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  gap: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
 }
 
+/* Avatar + nombre */
 .childInfo {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.3rem;
 }
 
 .avatar img {
-  width: 80px;
-  height: 80px;
+  width: 95px;
+  height: 95px;
   border-radius: 50%;
-  border: 3px solid #fff;
+  border: 4px solid #fff;
   object-fit: cover;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  transition: transform 0.35s ease;
 }
 
 .avatar img:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-}
-
-.childText {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .childName {
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 800;
 }
 
-.subtitle {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-
+/* -------------------- Botones de acción ---------- */
 .actions {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-}
-
-.actionButton {
-  background-color: #ED9263;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-}
-
-.actionButton:hover {
-  background-color: #018061;
-  transform: scale(1.1);
-}
-
-.backButton {
-  background-color: #ffffff;
-  color: #245AB2;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  align-self: flex-start;
-}
-
-
-.backButton:hover {
-  background-color: #f3f6f8;
-  transform: translateY(-2px);
-}
-
-/* -------------------- Grid principal ---------- */
-.contentGrid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1.8rem;
-  margin-top: 2rem;
-  align-items: start; 
-}
-
-/* -------------------- Card base ---------- */
-.card {
-  background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  margin-bottom: 2%;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-.sectionTitle {
-  margin-top: 0;
-  color: #018061;
-  border-bottom: 3px solid #8ED6CB;
-  padding-bottom: 0.4rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-/* -------------------- Salud ---------- */
-.healthGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
-.healthCard {
-  background: #ffffff;
-  padding: 1rem;
-  border-radius: 10px;
-  border-left: 4px solid #8ED6CB;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.healthReading {
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
-}
-
-.tempNormal {
-  color: #018061;
-}
-.tempHigh {
-  color: #ED9263;
-}
-.tempLow {
-  color: #245AB2;
-}
-
-/* -------------------- Contacto ---------- */
-.contactCard {
-  background-color: #f3f6f8;
-  border-left: 6px solid #245AB2;
-  align-self: start; 
-}
-
-.contactCard h2 {
-  color: #018061;
-  border-bottom-color: #8ED6CB;
-}
-
-.contactCard p {
-  margin: 0.4rem 0;
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
-.contactButton {
+.actionButton {
+  background-color: #FFD28F;
+  color: #6f4f30;
+  border: none;
+  border-radius: 16px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  width: 100%;
-  padding: 0.9rem;
-  margin-top: 1rem;
-  text-decoration: none;
-  color: #ffffff;
-  background-color: #245AB2;
-  border-radius: 10px;
-  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
 }
 
-.contactButton:hover {
-  background-color: #018061;
-  transform: translateY(-2px);
+.actionButton:hover {
+  background-color: #FFC76D;
+  transform: scale(1.12);
+}
+
+/* -------------------- Botón volver ---------- */
+.backButton {
+  background-color: #fff;
+  color: #4C7CD1;
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: 14px;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  transition: 0.3s;
+  /* margin-top: 2.5%; */
+}
+.backButton:hover { transform: translateY(-2px); }
+
+/* -------------------- GRID PRINCIPAL ---------- */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Columna izquierda */
+.mainLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+/* -------------------- Cards infantiles ---------- */
+.card {
+  background-color: #FFFFFF;
+  padding: 1.8rem;
+  border-radius: 22px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  border: 3px dashed #FFE8A3;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Títulos */
+.sectionTitle {
+  margin-top: 0;
+  color: #58A6A6;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-bottom: 3px solid #FFD9A0;
+  padding-bottom: .4rem;
+  margin-bottom: 1rem;
+}
+
+/* -------------------- Salud del niño ---------- */
+.healthGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.healthCard {
+  background: #fff8f0;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0px 4px 10px rgba(255, 199, 150, 0.25);
+  border: 2px solid #ffe1c1;
+}
+
+
+.healthReading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+
+/* Estados de temperatura */
+.tempNormal { color: #2E8B57; }
+.tempHigh { color: #FF6B6B; }
+.tempLow { color: #4C7CD1; }
+
+/* Animaciones */
+.flash { animation: flashTemp 0.5s ease-out; }
+@keyframes flashTemp { 0% { background-color: #FFF3CC; } 100% { background-color: #FFF7E9; }}
+
+.oxygenPulse { animation: oxygenAnim 0.7s ease-in-out; }
+@keyframes oxygenAnim { 50% { transform: scale(1.05); } }
+
+/* Corazón */
+.heartIcon { color: #FF8F62; }
+.heartBeat { animation: beat 0.4s ease-in-out; }
+
+.icon {
+  font-size: 1.8rem;
+}
+
+@keyframes beat { 50% { transform: scale(1.3); } }
+
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.25); }
+  50%  { transform: scale(1); }
+  75%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.heartBeat {
+  animation: heartbeat 0.5s ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes flashTempAnim {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.2); opacity: 0.75; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.tempFlash {
+  animation: flashTempAnim 0.6s ease-out;
+}
+
+@keyframes oxygenPulseAnim {
+  0%   { transform: scale(1); opacity: 0.9; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
+.oxygenPulse {
+  animation: oxygenPulseAnim 0.7s ease-in-out;
+}
+
+
+
+/* Listas */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.list li {
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+}
+
+/* -------------------- Tutor + Alimentación ---------- */
+.tutorColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tutorCard {
+  border-left: 6px solid #ffe8a3;
+  /* background-color: #ECF7FF; */
 }
 
 /* -------------------- Responsive ---------- */
 @media (max-width: 900px) {
-  .contentGrid {
+  .mainGrid {
     grid-template-columns: 1fr;
   }
 }
@@ -224,30 +254,9 @@
   .header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .avatar img {
-    width: 60px;
-    height: 60px;
-  }
-
-  .childName {
-    font-size: 1.5rem;
-  }
-
-  .actionButton {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
   }
 
   .healthGrid {
     grid-template-columns: 1fr;
-  }
-
-  .card {
-    padding: 1.2rem;
-    margin-bottom: 5%;
   }
 }

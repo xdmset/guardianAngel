@@ -1,43 +1,45 @@
-/* ----------------------- Navbar base ------------------ */
+/* ----------------------- Navbar estilo pastel natural ------------------ */
 .navbar {
   background-color: var(--tertiary);
-  /* tu color */
+ 
   color: var(--base-white);
   position: fixed;
-  /* pegado arriba */
   top: 0;
-  /* pegado al top */
   left: 0;
-  /* pegado al lado izquierdo */
   width: 100%;
-  /* ocupa todo el ancho */
   height: 70px;
-  /* altura del navbar */
   display: flex;
   align-items: center;
   z-index: 1000;
-  /* para que esté por encima de otros elementos */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 0 2rem;
 }
 
 /* ----------------------- Contenedor ------------------ */
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+
   display: flex;
   justify-content: space-between;
   /* logo a la izquierda, links a la derecha */
   align-items: center;
-  width: 100%;
 }
 
-/* ----------------------- Marca / Logo ------------------ */
+/* ----------------------- Marca ------------------ */
 .brand {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--base-white);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fefefe;
   text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: transform 0.25s ease;
+}
+
+.brand:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
 }
 
 /* ----------------------- Botón hamburguesa ------------------ */
@@ -45,118 +47,126 @@
   display: none;
   background: none;
   border: none;
-  color: var(--base-white);
-  font-size: 1.5rem;
+  color: #efefef;
+  font-size: 1.9rem;
   cursor: pointer;
+  transition: transform 0.25s ease;
 }
 
 .menuToggle:hover {
-  transform: scale(1.1);
-  transition: transform 0.2s ease;
+  transform: scale(1.18);
 }
 
-/* ----------------------- Links ------------------ */
+/* ----------------------- Links desktop ------------------ */
 .navLinks {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
   transition: all 0.3s ease;
 }
 
-/* Links individuales */
 .navLink {
-  color: #ffffffcc;
+  background: rgba(255, 255, 255, 0.45);
+  padding: 0.5rem 1.1rem;
+  border-radius: 14px;
+  color: #4a4a4a;
   text-decoration: none;
-  font-size: 1rem;
+  font-weight: 600;
+
   display: flex;
+  gap: 0.55rem;
   align-items: center;
-  border-bottom: 2px solid transparent;
-  gap: 0.5rem;
+
+  backdrop-filter: blur(5px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.10);
+
+  transition: all 0.25s ease;
 }
 
 .navLink:hover {
-  color: var(--base-white);
+  background: rgba(255, 255, 255, 0.65);
   transform: translateY(-2px);
-  transition: all 0.3s ease;
 }
 
+/* Activo */
 .navLink.active {
-  color: var(--base-white);
-  border-bottom-color: var(--primary);
+  background: #5A8CCF;
+  color: white;
+  box-shadow: 0 4px 12px rgba(90, 140, 207, 0.35);
 }
 
-/* Icono del niño */
+/* Icono */
 .kiddo {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  object-fit: cover;
-  /* border: 2px solid var(--primary); */
-  filter: brightness(0) invert(1);
 }
 
-
-/* Botón Cerrar Sesión */
+/* ----------------------- Botón Logout ------------------ */
 .logoutButton {
-  background-color: var(--primary);
-  color: var(--base-white);
+  background-color: #ff9dad;
+  color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
+  border-radius: 14px;
+  padding: 0.55rem 1.3rem;
+  font-weight: 700;
   cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(255, 140, 160, 0.35);
+  transition: all 0.25s ease;
 }
 
 .logoutButton:hover {
-  background-color: #018061;
-  transform: translateY(-2px);
-  transition: all 0.2s;
+  background-color: #ff899a;
+  transform: translateY(-3px);
 }
 
-/* ----------------------- Responsive Móvil ------------------ */
+/* ----------------------- Responsive ------------------ */
 @media (max-width: 768px) {
+
   .menuToggle {
     display: block;
   }
 
   .navLinks {
     position: absolute;
-    top: 70px;
+    top: 72px;
     left: 0;
     width: 100%;
     flex-direction: column;
-    background-color: var(--tertiary);
-    gap: 1rem;
+
+    background: rgba(123, 167, 247, 0.18);  
+    backdrop-filter: blur(12px);
     padding: 1rem 2rem;
+
     max-height: 0;
-    overflow: hidden;
     opacity: 0;
+    overflow: hidden;
+    gap: 1rem;
+
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+
+    transition: max-height 0.35s ease, opacity 0.35s ease;
   }
 
   .navLinks.showMenu {
     max-height: 500px;
     opacity: 1;
-    transition: all 0.3s ease;
   }
 
+  .navLink, 
   .logoutButton {
     width: 100%;
-    text-align: center;
+    justify-content: flex-start;
   }
 }
 
-/* ----------------------- Pequeños móviles ------------------ */
+/* Extra pequeño */
 @media (max-width: 480px) {
   .brand {
-    font-size: 1.3rem;
-  }
-
-  .kiddo {
-    width: 35px;
-    height: 35px;
-  }
-
-  .navLink {
-    font-size: 0.95rem;
+    font-size: 1.5rem;
   }
 }
