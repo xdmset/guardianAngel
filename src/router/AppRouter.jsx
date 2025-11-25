@@ -10,6 +10,7 @@ import ChildDetails from '../views/caregiver/ChildDetails';
 import Index from '../views/caregiver/Index';
 import SmartwatchManagerPage from '../views/admin/SmartwatchManagerPage';
 import TutorIndex from '../views/tutor/Index';
+import RegistrationPage from '../views/admin/RegistrationPage';
 
 const AppRouter = () => {
   const { user } = useAuth();
@@ -20,7 +21,7 @@ const AppRouter = () => {
       case 'admin': return '/admin/dashboard';
       case 'index': return '/cuidador/index';
       case 'tutor': return '/tutor/index';
-      
+
       case 'caregiver': return '/cuidador/index';
       // case 'caregiver': return '/cuidador/dashboard';
 
@@ -44,7 +45,8 @@ const AppRouter = () => {
             <Route path="/cuidador/dashboard" element={<CaregiverDashboard />} />
             <Route path="/niño/:id" element={<ChildDetails />} />
             <Route path="/admin/smartwatches" element={<SmartwatchManagerPage />} />
-            
+            <Route path="/admin/registration" element={<RegistrationPage />} />
+
             <Route path="/tutor/index" element={<TutorIndex />} />
 
           </>
