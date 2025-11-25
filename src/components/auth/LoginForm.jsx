@@ -4,9 +4,6 @@ import styles from './LoginForm.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LoginForm = () => {
-  // const [username, setUsername] = useState('admin');
-  // const [password, setPassword] = useState('admin123');
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,7 +27,8 @@ const LoginForm = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    // CAMBIO AQUÍ: Agregamos la clase "is-login-view" junto a styles.form
+    <form className={`${styles.form} is-login-view`} onSubmit={handleSubmit}>
       {error && <p className={styles.error}>{error}</p>}
 
       <div className={styles.inputGroup}>
