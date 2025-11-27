@@ -4,9 +4,6 @@ import styles from './LoginForm.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LoginForm = () => {
-  // const [username, setUsername] = useState('admin');
-  // const [password, setPassword] = useState('admin123');
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

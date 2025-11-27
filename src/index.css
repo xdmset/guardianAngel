@@ -10,7 +10,6 @@
   --background-light: #f8f9fa;
 }
 
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -20,6 +19,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-light);
   color: var(--text-dark);
+  
   padding-top: 70px;
 }
 
