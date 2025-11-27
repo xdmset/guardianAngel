@@ -1,3 +1,5 @@
+
+
 :root {
   --primary: #ED9263;
   --secondary: #8ED6CB;
@@ -23,4 +25,8 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+body:has(.is-login-view){
+  padding-top: 0 !important;
 }

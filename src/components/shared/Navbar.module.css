@@ -1,6 +1,7 @@
+@import '../../App.css';
 /* ----------------------- Navbar estilo pastel natural ------------------ */
 .navbar {
-  background-color: var(--tertiary);
+  background-color: var(--accent);
  
   color: var(--base-white);
   position: fixed;

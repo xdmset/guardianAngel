@@ -30,7 +30,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={`${styles.form} is-login-view`  }  onSubmit={handleSubmit}>
       {error && <p className={styles.error}>{error}</p>}
 
       <div className={styles.inputGroup}>

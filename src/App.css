@@ -1,20 +1,38 @@
 :root {
-  /* Paleta principal */
-  --primary: #ED9263;       /* Naranja principal cálido */
-  --secondary: #8ED6CB;     /* Verde agua suave */
-  --accent: #245AB2;        /* Azul profundo de contraste */
-  --background: #FFFFFF;    /* Fondo base */
-  --title-color: #018061;   /* Verde oscuro para títulos */
+    /* Paleta principal */
+    --primary: #ED9263;
+    --primary-light: #FFB58F;
 
-  /* Texto */
-  --text-color: #333333;
-  --muted-text: #6B7280;
+    --secondary: #8ED6CB;
+    
+    --third: #018061;
+    --third-light: #30A386;
+    --third-faded: #0180600a;
 
-  /* Estética */
-  --border-radius: 14px;
-  --transition: 0.3s ease;
-  --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    --accent: #245AB2;
+    --accent-light: #4372BD;
+    --accent-faded:#e2e2e2;
+
+    --bckgrnd: #fcfcfc;
+    
+    --title-color: #018061;
+    
+    /* Texto */
+    --text-color: #333333;
+    --text-light: #8f0404;
+    
+    --muted-text: #6B7280;
+    
+    /* Estética */
+    --border-radius: 14px;
+    
+    --transition: 0.3s ease;
+    
+    --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
 }
+
+
 
 #root {
 
