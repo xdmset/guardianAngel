@@ -12,7 +12,7 @@ const NotesSection = ({ notes, setShowNotesModal }) => {
           <h3>{notes[0].title}</h3>
           <p>{notes[0].content}</p>
           <small>
-            {notes[0].author_first_name} {notes[0].author_last_name} · {notes[0].priority}
+            {notes[0].author_first_name} {notes[0].author_last_name} · {notes[0].created_at}
           </small>
         </div>
       ) : (

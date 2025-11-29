@@ -7,10 +7,16 @@ import LoginPage from '../views/LoginPage';
 import Navbar from '../components/shared/Navbar';
 import CaregiverDashboard from '../views/caregiver/CaregiverDashboard';
 import ChildDetails from '../views/caregiver/ChildDetails';
+import AllChildren from '../views/caregiver/AllChildren';
 import Index from '../views/caregiver/Index';
+
 import SmartwatchManagerPage from '../views/admin/SmartwatchManagerPage';
 import TutorIndex from '../views/tutor/Index';
+import ChildDetailsTutor from '../views/tutor/ChildDetails';
+import TutorDashboard from '../views/tutor/TutorDashboard';
+
 import RegistrationPage from '../views/admin/RegistrationPage';
+
 
 const AppRouter = () => {
   const { user } = useAuth();
@@ -43,11 +49,18 @@ const AppRouter = () => {
           <>
             <Route path="/cuidador/index" element={<Index />} />
             <Route path="/cuidador/dashboard" element={<CaregiverDashboard />} />
+            <Route path="/cuidador/todos" element={<AllChildren />} />
+
+
             <Route path="/niño/:id" element={<ChildDetails />} />
+            
             <Route path="/admin/smartwatches" element={<SmartwatchManagerPage />} />
             <Route path="/admin/registration" element={<RegistrationPage />} />
 
             <Route path="/tutor/index" element={<TutorIndex />} />
+            <Route path="/tutor/niño/:id" element={<ChildDetailsTutor />} /> 
+            <Route path="/tutor/dashboard" element={<TutorDashboard />} /> 
+
 
           </>
         )}

@@ -3,26 +3,49 @@
 /* -------------------- Contenedor general ---------- */
 .container {
   max-width: 1150px;
-  margin: 2rem auto;
-  padding: 1.5rem;
+  margin: 2.5rem auto;
+  padding: 2rem;
   font-family: 'Poppins', 'Inter', sans-serif;
-  color: #2b2b2b;
-  background-color: #fdfdfdf5;
-  border-radius: 2%;
+  color: var(--text-color);
+  /* background-color: var(--background); */
 }
+
 
 /* -------------------- Header Infantil ---------- */
 .header {
-  background: linear-gradient(135deg, var(--title-color) 0%, var(--accent) 100%);
-  color: #fcfcfc;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-dark) 0%,
+    var(--secondary) 100%
+  );
+  color: white;
   padding: 2rem;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+
+  /* ⭐⭐ Estrellitas sutiles en background pattern */
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='2' fill='%23ffffff33'/%3E%3Ccircle cx='80' cy='40' r='1.8' fill='%23ffffff29'/%3E%3Ccircle cx='50' cy='90' r='1.5' fill='%23ffffff22'/%3E%3C/svg%3E");
+  opacity: 0.25;
+  background-size: 120px 120px;
+  z-index: 0;
+}
+
+.header > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* Avatar + nombre */
@@ -36,15 +59,16 @@
   width: 95px;
   height: 95px;
   border-radius: 50%;
-  border: 4px solid #fff;
+  border: 3px solid #fff;
   object-fit: cover;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-  transition: transform 0.35s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transition: 0.3s ease;
 }
 
 .avatar img:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
+
 
 .childName {
   margin: 0;
@@ -60,25 +84,26 @@
 }
 
 .actionButton {
-  background-color: #0180609a;
-  color: rgb(248, 248, 248);
+  background-color: var(--primary);
+  color: white;
   border: none;
-  border-radius: 16px;
-  width: 50px;
-  height: 50px;
+  border-radius: 15px;
+  width: 48px;
+  height: 48px;
+  font-size: 1.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.4rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transition: 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .actionButton:hover {
-  background-color: #FFC76D;
-  transform: scale(1.12);
+  background-color: var(--primary-dark);
+  transform: translateY(-2px) scale(1.05);
 }
+
 
 /* -------------------- Botón volver ---------- */
 .backButton {
@@ -98,69 +123,111 @@
 
 /* -------------------- GRID PRINCIPAL ---------- */
 .mainGrid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  margin-top: 2rem;
+  padding-top: 2%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two columns */
+  gap: 1.5rem;
 }
 
 /* Columna izquierda */
 .mainLeft {
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
+  gap: 1.5rem;
+}
+
+/* Left column */
+.colLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Right column */
+.colRight {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Cards fill height equally */
+.row > * {
+  align-self: stretch;
+}
+
+.row-notes-tutor {
+  display: grid;
+  grid-template-columns: 68% 30%; /* <<< aquí */
+
+  align-items: stretch; /* asegura misma altura */
+  justify-content: space-between;
+}
+
+.row-health {
+  display: block;
+  width: 100%;
 }
 
 /* -------------------- Cards infantiles ---------- */
 .card {
-  background-color: #FFFFFF;
-  padding: 1.8rem;
-  border-radius: 5px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  border: 2px dashed var(--primary);
-  transition: 0.3s ease;
+  background-color: var(--surface);
+  padding: 1.6rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  border: 3px dashed #e8e8e8;
+  transition: 0.25s ease;
+  text-align: left;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-border: 2px solid var(--primary);
+  transform: translateY(-3px);
+  /* border-color: var(--primary); */
+  border: 3px solid var(--primary);
 }
+
 
 /* Títulos */
 .sectionTitle {
-  margin-top: 0;
-  color: var(--accent-light);
   font-size: 1.4rem;
   font-weight: 700;
-  border-bottom: 3px solid var(--accent-light);
-  padding-bottom: .4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
+  color: var(--title-color);
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--secondary);
 }
+
 
 /* -------------------- Salud del niño ---------- */
 .healthGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 1.2rem;
 }
 
 .healthCard {
-  background: var(--bckgrnd);
-  border-radius: 3px;
-  padding: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.150);
-  border: 2px solid var(--accent-light);
+  flex: 1;
+  background-color: var(--background);
+  padding: 1.2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #e8e8e8;
+  text-align: center;
 }
 
 
 .healthReading {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   font-size: 1.3rem;
-  font-weight: bold;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
 }
-
 
 /* Estados de temperatura */
 .tempNormal { color: #2E8B57; }
@@ -180,6 +247,7 @@ border: 2px solid var(--primary);
 
 .icon {
   font-size: 1.8rem;
+  color: var(--accent);
 }
 
 @keyframes beat { 50% { transform: scale(1.3); } }
@@ -226,21 +294,32 @@ border: 2px solid var(--primary);
   padding: 0;
 }
 .list li {
-  margin-bottom: 0.6rem;
+  list-style: none;
+  padding: 0.5rem 0.3rem;
+  font-size: 1rem;
+  color: var(--text-color);
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 1.05rem;
+}
+
+.list li svg {
+  color: var(--accent-dark);
 }
 
 /* -------------------- Tutor + Alimentación ---------- */
 .tutorColumn {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.6rem;
 }
 
 .tutorCard {
+  border-left: 6px solid var(--accent);
+  height: 100%;
+}
+
+.tutorCard:hover {
   border-left: 4px solid var(--primary);
   /* background-color: #ECF7FF; */
 }
@@ -258,6 +337,7 @@ border: 2px solid var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: left;
   z-index: 1000;
 }
 
@@ -284,8 +364,11 @@ border: 2px solid var(--primary);
 
 /* ------------------------ Cada nota en el modal */
 .noteItem {
-  background: #8ed6cb1c;
-  border: 2px dashed var(--third);
+  background: #d6d08e1c;
+  border-top: 2px dashed var(--secondary-dark);
+  border-left: 2px dashed var(--secondary-dark);
+  border-right: 2px dashed var(--secondary-dark);
+
   border-radius: 5px;
   padding: 1rem;
   margin-bottom: 1.1rem;
@@ -311,7 +394,7 @@ border: 2px solid var(--primary);
 
 .noteItem hr {
   border: none;
-  border-top: 2px dashed #018061;
+  border-top: 2px dashed #000000;
   margin-top: 1rem;
 }
 
@@ -319,7 +402,7 @@ border: 2px solid var(--primary);
 .closeButton {
   margin-top: 10px;
   padding: 12px 20px;
-  background: var(--third-light);
+  background: var(--accent);
   color: white;
   font-weight: 600;
   border: none;
@@ -331,7 +414,7 @@ border: 2px solid var(--primary);
 }
 
 .closeButton:hover {
-  background: var(--third);
+  background: var(--accent-dark);
   transform: scale(1.03);
 }
 
@@ -376,8 +459,8 @@ border: 2px solid var(--primary);
   padding: 10px;
   margin-bottom: 14px;
   border-radius: 5px;
-  border: 2px solid var(--third);
-  background: var(--third-faded);
+  border: 2px solid var(--accent-dark);
+  background: var(--accent-faded);
   font-size: 1rem;
 }
 
@@ -431,6 +514,7 @@ border: 2px solid var(--primary);
 /* -------------------- Responsive ---------- */
 @media (max-width: 900px) {
   .mainGrid {
+    
     grid-template-columns: 1fr;
   }
 }
@@ -444,4 +528,26 @@ border: 2px solid var(--primary);
   .healthGrid {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* PARA EL BG IMAGE */
+/* Imagen decorativa en la esquina inferior derecha */
+.container::after {
+  content: "";
+  position: fixed;
+  bottom: -1030px;
+  right: -700px;
+  width: 1880px;   /* tamaño de la imagen */
+  height: 1880px;
+  background-image: url("../../assets/img/kid-toy.png"); /* <-- tu imagen */
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.15;      /* que no distraiga */
+  pointer-events: none; /* no afecta clicks */
+  z-index:-1;
+
+  /* MEJORAR LA CALIDAD DE IMG */
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
 }

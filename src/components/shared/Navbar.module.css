@@ -1,22 +1,23 @@
 @import '../../App.css';
-/* ----------------------- Navbar estilo pastel natural ------------------ */
+
+/* ----------------------- Navbar General ----------------------- */
 .navbar {
-  background-color: var(--accent);
- 
-  color: var(--base-white);
+  background: linear-gradient(135deg, var(--head-bg) 30%, var(--secondary-dark) 100%);
+  color: white;
+
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 70px;
+
   display: flex;
   align-items: center;
+
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 0 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* ----------------------- Contenedor ------------------ */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -24,150 +25,210 @@
 
   display: flex;
   justify-content: space-between;
-  /* logo a la izquierda, links a la derecha */
   align-items: center;
 }
 
-/* ----------------------- Marca ------------------ */
+/* ----------------------- Brand ----------------------- */
 .brand {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  color: #fefefe;
+  color: white;
+
   text-decoration: none;
   letter-spacing: 0.5px;
-  transition: transform 0.25s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  transition: var(--transition);
 }
 
 .brand:hover {
-  transform: scale(1.05);
-  opacity: 0.85;
+  opacity: 0.9;
+  transform: scale(1.03);
 }
 
-/* ----------------------- Botón hamburguesa ------------------ */
+/* ----------------------- Hamburguesa ----------------------- */
 .menuToggle {
-  display: none;
   background: none;
   border: none;
-  color: #efefef;
-  font-size: 1.9rem;
+  color: white;
+
+  display: none;
+  font-size: 2rem;
+
   cursor: pointer;
-  transition: transform 0.25s ease;
+  transition: var(--transition);
 }
 
 .menuToggle:hover {
-  transform: scale(1.18);
+  transform: scale(1.15);
 }
 
-/* ----------------------- Links desktop ------------------ */
+/* ----------------------- Links Desktop ----------------------- */
 .navLinks {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  transition: all 0.3s ease;
+  gap: 1rem;
+
+  transition: var(--transition);
 }
 
 .navLink {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.55);
   padding: 0.5rem 1.1rem;
-  border-radius: 14px;
-  color: #4a4a4a;
+
+  border-radius: 5px;
+  color: var(--title-color);
   text-decoration: none;
   font-weight: 600;
 
   display: flex;
-  gap: 0.55rem;
   align-items: center;
+  gap: 0.5rem;
 
-  backdrop-filter: blur(5px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.10);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
 
-  transition: all 0.25s ease;
+  transition: var(--transition);
 }
 
 .navLink:hover {
-  background: rgba(255, 255, 255, 0.65);
+  background: var(--accent);
   transform: translateY(-2px);
+  color: white;
 }
 
 /* Activo */
-.navLink.active {
-  background: #5A8CCF;
+.active {
+  background: var(--accent);
   color: white;
-  box-shadow: 0 4px 12px rgba(90, 140, 207, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Icono */
-.kiddo {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-}
-
-/* ----------------------- Botón Logout ------------------ */
+/* ----------------------- Logout ----------------------- */
 .logoutButton {
-  background-color: #ff9dad;
-  color: #fff;
+  background: var(--accent);
+  color: white;
+
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 0.55rem 1.3rem;
   font-weight: 700;
   cursor: pointer;
 
-  box-shadow: 0 4px 12px rgba(255, 140, 160, 0.35);
-  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: var(--transition);
 }
 
 .logoutButton:hover {
-  background-color: #ff899a;
+  background: var(--accent-dark);
   transform: translateY(-3px);
 }
 
-/* ----------------------- Responsive ------------------ */
+/* ----------------------- Responsive ----------------------- */
 @media (max-width: 768px) {
-
   .menuToggle {
     display: block;
   }
 
   .navLinks {
     position: absolute;
-    top: 72px;
+    top: 70px;
     left: 0;
+
     width: 100%;
     flex-direction: column;
 
-    background: rgba(123, 167, 247, 0.18);  
-    backdrop-filter: blur(12px);
-    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px);
+
+    padding: 1rem 1.5rem;
+    gap: 1rem;
 
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    gap: 1rem;
 
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 
-    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
-
-    transition: max-height 0.35s ease, opacity 0.35s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    transition: max-height 0.35s ease, opacity 0.3s ease;
   }
 
-  .navLinks.showMenu {
+  .showMenu {
     max-height: 500px;
     opacity: 1;
   }
 
-  .navLink, 
+  .navLink,
   .logoutButton {
     width: 100%;
-    justify-content: flex-start;
   }
 }
+/* ----------------------- Fin Navbar ----------------------- */
 
-/* Extra pequeño */
-@media (max-width: 480px) {
-  .brand {
-    font-size: 1.5rem;
-  }
+/* BOTON DE LOGOUT */
+.logoutButton {
+  background: var(--secondary); /* azul bebé */
+  border: none;
+  padding: 0.45rem 0.7rem;
+  border-radius: 12px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+  transition: var(--transition);
+}
+
+.logoutButton:hover {
+  background: var(--secondary-dark);
+  transform: translateY(-2px);
+}
+
+.logoutIcon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* si quieres la imagen blanca */
+}
+
+/* BOTON DE MI NIÑO */
+/* -------- Ajuste para botones que usen navLink -------- */
+button.navLink {
+  border: none;
+  background: rgba(255, 255, 255, 0);
+  cursor: pointer;
+
+  /* Para que no cambie el tamaño */
+  padding: 0.5rem 1.1rem;
+  border-radius: 5px;
+
+  /* Hereda la misma estética */
+  font-weight: 600;
+  color: #fafafa;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+
+}
+
+/* Hover igual que un <a> */
+button.navLink:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+  color: var(--text-color);
+}
+
+/* Activo igual */
+button.navLink.active {
+  /* background: var(--primary); */
+  color: white;
+ 
 }

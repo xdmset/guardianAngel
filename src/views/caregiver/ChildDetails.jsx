@@ -4,6 +4,8 @@ import { FaPlus, FaCalendarAlt, FaUtensils, FaGamepad } from 'react-icons/fa';
 import { FaHeartPulse, FaTemperatureThreeQuarters } from 'react-icons/fa6';
 import styles from './ChildDetails.module.css';
 import api from '../../config/apiConfig';
+import { IoWater } from "react-icons/io5";
+
 
 // Componentes separados
 import NotesSection from '../../components/childDetails/NotesSection';
@@ -159,102 +161,139 @@ const ChildDetails = () => {
     return () => clearInterval(interval);
   }, [child]);
 
-  if (loading) return <h2>Cargando datos...</h2>;
+  if (loading) return <h2 className={styles.loading}>Cargando datos...</h2>;
 
   return (
     <div className={styles.container}>
-      <Link to="/cuidador/dashboard" className={styles.backButton}>⬅ Volver</Link>
-
-      <header className={styles.header}>
+      <header className={styles.header} role="banner" aria-label="Encabezado del niño">
         <div className={styles.childInfo}>
           <div className={styles.avatar}>
             <img 
-              src={`https://ui-avatars.com/api/?name=${child.first_name}&background=FFD1DC&color=555`} 
-              alt={child.first_name} 
+              src={`https://ui-avatars.com/api/?name=${child.first_name}&background=FEE9D6&color=5A6B8A`} 
+              alt={`${child.first_name} avatar`} 
             />
           </div>
 
-          <div>
+          <div className={styles.nameBlock}>
             <h1 className={styles.childName}>{child.first_name} {child.last_name}</h1>
-            <p>¡Bienvenido a su día en la guardería!</p>
+            <p className={styles.welcome}>¡Bienvenido a su día en la guardería!</p>
           </div>
         </div>
 
         <div className={styles.actions}>
-          <button className={styles.actionButton} onClick={() => setShowAddNoteModal(true)}>
+          <button
+            className={styles.actionButton}
+            onClick={() => setShowAddNoteModal(true)}
+            aria-label="Agregar nota"
+            title="Agregar nota"
+          >
             <FaPlus />
           </button>
-          <button className={styles.actionButton}><FaCalendarAlt /></button>
+
+          {/* <button
+            className={styles.actionButton}
+            aria-label="Calendario"
+            title="Ver calendario"
+          >
+            <FaCalendarAlt />
+          </button> */}
         </div>
       </header>
 
       <main className={styles.mainGrid}>
-        
-        <div className={styles.mainLeft}>
-          
-          <NotesSection 
-            notes={notes}
-            setShowNotesModal={setShowNotesModal}
-          />
 
-          {/* Seccion donde se muestran los estados de salud, temperatura, heart rate */}
-          <section className={styles.card}>
+        {/* ------------- ROW 1 : NOTAS + TUTOR ------------- */}
+        <div className={styles["row-notes-tutor"]}>
+          <div className={styles.colLeft}>
+            <NotesSection 
+              notes={notes}
+              setShowNotesModal={setShowNotesModal}
+            />
+          </div>
+
+          <div className={styles.colRight}>
+            <section className={`${styles.card} ${styles.tutorCard}`}>
+              <h2 className={styles.sectionTitle}>Tutor</h2>
+              {tutor ? (
+                <>
+                  <p><strong>Nombre:</strong> {tutor.first_name} {tutor.last_name}</p>
+                  <p><strong>Correo:</strong> {tutor.email}</p>
+                </>
+              ) : (
+                <p>No hay tutor registrado.</p>
+              )}
+            </section>
+          </div>
+        </div>
+
+        {/* ------------- ROW 2 : ESTADO DE SALUD (solo) ------------- */}
+        <div className={styles["row-health"]}>
+          <section className={`${styles.card} ${styles.healthSection}`}>
             <h2 className={styles.sectionTitle}>Estado de Salud</h2>
 
             <div className={styles.healthGrid}>
               <div className={styles.healthCard}>
-                <h3>Ritmo Cardíaco</h3>
+                <div className={styles.healthTitle}>
+                  <FaHeartPulse className={`${styles.icon} ${pulse ? styles.pulseAnim : ''}`}/>
+                  <span>Ritmo Cardíaco</span>
+                </div>
                 <p className={styles.healthReading}>
-                  <FaHeartPulse className={styles.icon} />
                   {heartRate ? `${heartRate} LPM` : '—'}
                 </p>
               </div>
 
-              <div className={`${styles.healthCard}`}>
-                <h3>Temperatura</h3>
+              <div className={styles.healthCard}>
+                <div className={styles.healthTitle}>
+                  <FaTemperatureThreeQuarters className={styles.icon}/>
+                  <span>Temperatura</span>
+                </div>
                 <p className={styles.healthReading}>
-                  <FaTemperatureThreeQuarters className={styles.icon} />
                   {temperature ? `${temperature.toFixed(1)}°C` : '—'}
+                </p>
+              </div>
+
+              <div className={styles.healthCard}>
+                <div className={styles.healthTitle}>
+                  <IoWater className={styles.icon}/>
+                  <span>Oxigenación</span>
+                </div>
+                <p className={styles.healthReading}>
+                  {oxygenation ? `${oxygenation}%` : '—'}
                 </p>
               </div>
             </div>
           </section>
+        </div>
 
-          <section className={styles.card}>
-            <h2 className={styles.sectionTitle}>Actividades</h2>
-            <ul className={styles.list}>
-              <li><FaGamepad /> Juegos de construcción – 30 min</li>
-              <li><FaGamepad /> Pintura y creatividad – 20 min</li>
-              <li><FaGamepad /> Canciones y movimiento – 15 min</li>
-            </ul>
-          </section>
+        {/* ------------- ROW 3 : ACTIVIDADES + ALIMENTACIÓN ------------- */}
+        <div className={styles.row}>
+
+          <div className={styles.colLeft}>
+            <section className={styles.card}>
+              <h2 className={styles.sectionTitle}>Actividades</h2>
+              <ul className={styles.list}>
+                <li><FaGamepad /> Juegos de construcción – 30 min</li>
+                <li><FaGamepad /> Pintura – 20 min</li>
+                <li><FaGamepad /> Canciones – 15 min</li>
+              </ul>
+            </section>
+          </div>
+
+          <div className={styles.colRight}>
+            <section className={styles.card}>
+              <h2 className={styles.sectionTitle}>🍽 Alimentación</h2>
+              <ul className={styles.list}>
+                <li><FaUtensils /> Desayuno: Fruta</li>
+                <li><FaUtensils /> Almuerzo: Sopa</li>
+                <li><FaUtensils /> Merienda: Yogur</li>
+              </ul>
+            </section>
+          </div>
 
         </div>
 
-        <aside className={styles.tutorColumn}>
-          <section className={`${styles.card} ${styles.tutorCard}`}>
-            <h2 className={styles.sectionTitle}>Tutor</h2>
-            {tutor ? (
-              <>
-                <p><strong>Nombre:</strong> {tutor.first_name} {tutor.last_name}</p>
-                <p><strong>Correo:</strong> {tutor.email}</p>
-              </>
-            ) : (
-              <p>No hay tutor registrado.</p>
-            )}
-          </section>
-
-          <section className={styles.card}>
-            <h2 className={styles.sectionTitle}>🍽 Alimentación</h2>
-            <ul className={styles.list}>
-              <li><FaUtensils /> Desayuno: Fruta y cereal</li>
-              <li><FaUtensils /> Almuerzo: Sopa y arroz</li>
-              <li><FaUtensils /> Merienda: Yogur</li>
-            </ul>
-          </section>
-        </aside>
-
       </main>
+
 
       {/* --------------------- MODALES --------------------- */}
       <NotesModal

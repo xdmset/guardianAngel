@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import styles from './Navbar.module.css';
-import kidIcon from '../../assets/header/kiddo.png';
-
-
+import logoutIcon from '../../assets/img/logout.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Navbar = () => {
@@ -12,73 +10,80 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
-
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
-
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  // ------------ 
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
-        {/* Marca */}
-       <NavLink
-        to={
-          user?.role === "tutor"
-            ? "/tutor/index"
-            : user?.role === "caregiver"
-              ? "/cuidador/index"
-              : "/login" // fallback por si acaso
-        }
-        className={styles.brand}
-        onClick={closeMenu}
-      >
-        Guardian Angel
-      </NavLink>
+        
+        <NavLink
+          to={
+            user?.role === "tutor"
+              ? "/tutor/index"
+              : user?.role === "caregiver"
+                ? "/cuidador/index"
+                : "/login"
+          }
+          className={styles.brand}
+          onClick={closeMenu}
+        >
+          Guardian Angel
+        </NavLink>
 
-
-
-        {/* Botón hamburguesa para responsivenes del movil */}
         <button className={styles.menuToggle} onClick={toggleMenu}>
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Links */}
         <div className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
-          {/* Checa si el usuario es caregiver para mostrar esta opcion */}
+          
+          {/* Caregiver */}
           {user?.role === "caregiver" && (
-            <NavLink
-              to="/cuidador/dashboard"
-              onClick={closeMenu}
-              className={({ isActive }) =>
-                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-              }
-            >
-              <img src={kidIcon} alt="Logo de Kid" className={styles.kiddo} /> Mis Niños
-            </NavLink>
+             <>
+              <NavLink
+                to="/cuidador/dashboard"
+                onClick={closeMenu}
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+                }
+              >
+                Mis Niños
+              </NavLink>
+
+              <NavLink
+                to="/cuidador/todos"
+                onClick={closeMenu}
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+                }
+              >
+                Todos los Niños
+              </NavLink>
+            </>
           )}
 
-          {/* checar si el user es tutor ---NO MANDA A NINGUN LADO AUN */}
+          {/* Tutor */}
           {user?.role === "tutor" && (
             <NavLink
-              to="/tutor/dashboard"
-              onClick={closeMenu}
-              className={({ isActive }) =>
-                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-              }
-            >
-              Mi Niño
-            </NavLink>
-
+                to="/tutor/dashboard"
+                onClick={closeMenu}
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+                }
+              >
+                Mi Niño
+              </NavLink>
           )}
 
 
           <button onClick={handleLogout} className={styles.logoutButton}>
-            Cerrar Sesión
+            <img src={logoutIcon} alt="Cerrar sesión" className={styles.logoutIcon} />
           </button>
         </div>
       </div>

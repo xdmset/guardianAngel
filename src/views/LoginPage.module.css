@@ -1,14 +1,16 @@
+@import '../App.css';
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
   padding: 1rem;
+  
 }
 
 .loginBox {
-  background-color: var(--base-white);
+  background-color: var(--surface);
   padding: 2.5rem;
   border-radius: 20px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);

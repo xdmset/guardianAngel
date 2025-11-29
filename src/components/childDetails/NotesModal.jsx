@@ -28,7 +28,7 @@ const NotesModal = ({
             <h3>{note.title}</h3>
             <p>{note.content}</p>
             <small>
-              {note.author_first_name} {note.author_last_name} ({note.author_role}) · {note.priority}
+              {note.author_first_name} {note.author_last_name} · {note.created_at}
             </small>
 
             <div className={styles.noteActions}>

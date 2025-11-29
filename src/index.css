@@ -1,6 +1,6 @@
 
 
-:root {
+/* :root {
   --primary: #ED9263;
   --secondary: #8ED6CB;
   --tertiary: #245AB2;
@@ -8,7 +8,7 @@
   --text-dark: #333;
   --text-light: #666;
   --background-light: #f8f9fa;
-}
+} */
 
 body {
   margin: 0;
@@ -17,7 +17,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-light);
+  background-color: var(--background);
   color: var(--text-dark);
   
   padding-top: 70px;
