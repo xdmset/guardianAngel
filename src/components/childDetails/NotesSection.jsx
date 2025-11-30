@@ -4,7 +4,7 @@ import styles from "../../views/caregiver/ChildDetails.module.css";
 
 const NotesSection = ({ notes, setShowNotesModal }) => {
   return (
-    <section className={styles.card}>
+    <section className={`${styles.card} ${styles.notesCard}`}>
       <h2 className={styles.sectionTitle}>Notas</h2>
 
       {notes.length > 0 ? (

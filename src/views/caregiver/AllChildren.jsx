@@ -41,6 +41,7 @@ const AllChildren = () => {
 
   return (
     <div className={styles.pageContainer}>
+      
       <h1 className={styles.pageTitle}>Todos los Niños Registrados</h1>
       <p className={styles.pageSubtitle}>
         Aquí puedes ver la lista completa de niños registrados en el sistema.

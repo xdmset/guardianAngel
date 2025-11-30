@@ -8,6 +8,7 @@
   margin: 0 auto;
 }
 
+
 .pageTitle {
   font-size: 2.2rem;
   font-weight: 800;
@@ -128,4 +129,27 @@
     padding: 0.55rem 0.9rem;
     font-size: 0.8rem;
   }
+}
+
+
+.pageContainer::after {
+  content: "";
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 2000px;   /* tamaño de la imagen */
+  height: 2000px;
+  background-image: url("../../assets/img/bg-dashboard.png"); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.12;      /* que no distraiga */
+  pointer-events: none; /* no afecta clicks */
+  z-index:-1;
+
+  /* BLUR */
+  filter: blur(10px);   /* Ajusta el nivel de desenfoque */
+
+  /* MEJORAR LA CALIDAD DE IMG */
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast; 
 }

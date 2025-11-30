@@ -11,6 +11,9 @@ import NotesSection from '../../components/childDetails/NotesSection';
 import NotesModal from '../../components/childDetails/NotesModal';
 import AddNoteModal from '../../components/childDetails/AddNoteModal';
 import EditNoteModal from '../../components/childDetails/EditNoteModal';
+import HealthSection from '../../components/childDetails/HealthSection';
+import SuggestionsSection from '../../components/childDetails/SuggestionsSection';
+import Horario from '../../components/childDetails/Horario';
 
 const ChildDetails = () => {
   // Estados y variables
@@ -218,67 +221,24 @@ const ChildDetails = () => {
         </div>
 
         {/* ------------- ROW 2 : ESTADO DE SALUD (solo) ------------- */}
-        <div className={styles["row-health"]}>
-          <section className={`${styles.card} ${styles.healthSection}`}>
-            <h2 className={styles.sectionTitle}>Estado de Salud</h2>
-
-            <div className={styles.healthGrid}>
-              <div className={styles.healthCard}>
-                <div className={styles.healthTitle}>
-                  <FaHeartPulse className={`${styles.icon} ${pulse ? styles.pulseAnim : ''}`}/>
-                  <span>Ritmo Cardíaco</span>
-                </div>
-                <p className={styles.healthReading}>
-                  {heartRate ? `${heartRate} LPM` : '—'}
-                </p>
-              </div>
-
-              <div className={styles.healthCard}>
-                <div className={styles.healthTitle}>
-                  <FaTemperatureThreeQuarters className={styles.icon}/>
-                  <span>Temperatura</span>
-                </div>
-                <p className={styles.healthReading}>
-                  {temperature ? `${temperature.toFixed(1)}°C` : '—'}
-                </p>
-              </div>
-
-              <div className={styles.healthCard}>
-                <div className={styles.healthTitle}>
-                  <IoWater className={styles.icon}/>
-                  <span>Oxigenación</span>
-                </div>
-                <p className={styles.healthReading}>
-                  {oxygenation ? `${oxygenation}%` : '—'}
-                </p>
-              </div>
-            </div>
-          </section>
-        </div>
+        <HealthSection
+          smartwatchId={child.id_smartwatch}
+          heartRate={heartRate}
+          temperature={temperature}
+          oxygenation={oxygenation}
+          pulse={pulse}
+        />
 
         {/* ------------- ROW 3 : ACTIVIDADES + ALIMENTACIÓN ------------- */}
         <div className={styles.row}>
 
           <div className={styles.colLeft}>
-            <section className={styles.card}>
-              <h2 className={styles.sectionTitle}>Actividades</h2>
-              <ul className={styles.list}>
-                <li><FaGamepad /> Juegos de construcción – 30 min</li>
-                <li><FaGamepad /> Pintura – 20 min</li>
-                <li><FaGamepad /> Canciones – 15 min</li>
-              </ul>
-            </section>
+            <Horario childId={child.id_child} />
           </div>
 
-          <div className={styles.colRight}>
-            <section className={styles.card}>
-              <h2 className={styles.sectionTitle}>🍽 Alimentación</h2>
-              <ul className={styles.list}>
-                <li><FaUtensils /> Desayuno: Fruta</li>
-                <li><FaUtensils /> Almuerzo: Sopa</li>
-                <li><FaUtensils /> Merienda: Yogur</li>
-              </ul>
-            </section>
+          {/* Seccion de sugestion para recomendaciones */}
+          <div className={`${styles.colRight} `}>
+            <SuggestionsSection smartwatchId={child.id_smartwatch} />
           </div>
 
         </div>

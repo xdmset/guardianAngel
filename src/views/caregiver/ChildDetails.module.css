@@ -159,6 +159,7 @@
 /* Cards fill height equally */
 .row > * {
   align-self: stretch;
+  
 }
 
 .row-notes-tutor {
@@ -191,6 +192,10 @@
   border: 3px solid var(--primary);
 }
 
+.notesCard, .cardActivities, .cardSugestion{
+  height: 100%;
+}
+
 
 /* Títulos */
 .sectionTitle {
@@ -216,6 +221,7 @@
   border-radius: var(--border-radius);
   border: 1px solid #e8e8e8;
   text-align: center;
+  cursor: pointer;
 }
 
 
@@ -540,7 +546,7 @@
   right: -700px;
   width: 1880px;   /* tamaño de la imagen */
   height: 1880px;
-  background-image: url("../../assets/img/kid-toy.png"); /* <-- tu imagen */
+  background-image: url("../../assets/img/kid-toy.png");  
   background-size: contain;
   background-repeat: no-repeat;
   opacity: 0.15;      /* que no distraiga */
@@ -548,6 +554,55 @@
   z-index:-1;
 
   /* MEJORAR LA CALIDAD DE IMG */
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ---- IMAGEN 1 (bg-dashboard) ---- */
+.container::before {
+  content: "";
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+
+  width: 2000px;
+  height: 2000px;
+
+  background-image: url("../../assets/img/bg-dashboard.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: -1;
+
+  /* BLUR */
+  filter: blur(10px);
+
+  /* Mejor calidad */
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ---- IMAGEN 2 (kid-toy) ---- */
+.container::after {
+  content: "";
+  position: fixed;
+  bottom: -1030px;
+  right: -700px;
+
+  width: 1880px;
+  height: 1880px;
+
+  background-image: url("../../assets/img/kid-toy.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: -1;
+
+  /* Mejor calidad */
   image-rendering: crisp-edges;
   image-rendering: -webkit-optimize-contrast;
 }
