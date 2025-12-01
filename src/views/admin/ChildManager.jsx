@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, X, Save, Search, Calendar, Users, Baby, AlertCircle, Watch } from 'lucide-react';
+import api from '../../config/apiConfig';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = api.baseUrl
+
 
 const ChildManager = () => {
     const [children, setChildren] = useState([]);
@@ -48,7 +50,7 @@ const ChildManager = () => {
 
     const loadChildren = async () => {
         try {
-            const response = await fetch(`${API_URL}/children`);
+            const response = await fetch(`${API_URL}children`);
             if (!response.ok) throw new Error('Error al cargar niños');
             const data = await response.json();
             setChildren(data);
@@ -60,7 +62,7 @@ const ChildManager = () => {
 
     const loadDaycares = async () => {
         try {
-            const response = await fetch(`${API_URL}/daycares/`);
+            const response = await fetch(`${API_URL}daycares/`);
             if (!response.ok) throw new Error('Error al cargar guarderías');
             const data = await response.json();
             setDaycares(data);
@@ -72,7 +74,7 @@ const ChildManager = () => {
 
     const loadUsers = async () => {
         try {
-            const response = await fetch(`${API_URL}/users/`);
+            const response = await fetch(`${API_URL}users/`);
             if (!response.ok) throw new Error('Error al cargar usuarios');
             const data = await response.json();
 
@@ -89,7 +91,7 @@ const ChildManager = () => {
 
     const loadSmartWatches = async () => {
         try {
-            const response = await fetch(`${API_URL}/smartwatches/`);
+            const response = await fetch(`${API_URL}smartwatches/`);
             if (!response.ok) throw new Error('Error al cargar smartwatches');
             const data = await response.json();
             setSmartWatches(data);
@@ -193,7 +195,7 @@ const ChildManager = () => {
 
             let response;
             if (isEditing) {
-                response = await fetch(`${API_URL}/children/${currentChild.id_child}`, {
+                response = await fetch(`${API_URL}children/${currentChild.id_child}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -201,7 +203,7 @@ const ChildManager = () => {
                     body: JSON.stringify(payload)
                 });
             } else {
-                response = await fetch(`${API_URL}/children`, {
+                response = await fetch(`${API_URL}children`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -237,7 +239,7 @@ const ChildManager = () => {
 
         setLoading(true);
         try {
-            const response = await fetch(`${API_URL}/children/${childId}`, {
+            const response = await fetch(`${API_URL}children/${childId}`, {
                 method: 'DELETE'
             });
 
@@ -792,7 +794,6 @@ const styles = {
     tableContainer: {
         backgroundColor: 'var(--surface)',
         borderRadius: 'var(--border-radius)',
-        padding: '0', // Removed padding for cleaner table look
         padding: '0', // Removed padding for cleaner table look
         boxShadow: 'var(--shadow)',
         overflowX: 'auto',

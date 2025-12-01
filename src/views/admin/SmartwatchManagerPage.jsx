@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Watch, Plus, Trash2, Edit2, UserPlus, AlertCircle, CheckCircle, Search, X } from 'lucide-react';
 import "./SmartWatchManager.css"
+import api from '../../config/apiConfig';
 
 // Componente Alert
 const Alert = ({ type, message }) => {
@@ -288,7 +289,7 @@ const SmartWatchManagerPage = () => {
         status: 'inactive'
     });
 
-    const API_BASE_URL = 'http://localhost:5000/api';
+    const API_BASE_URL = api.baseUrl
 
     useEffect(() => {
         fetchSmartwatches();
@@ -299,7 +300,7 @@ const SmartWatchManagerPage = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`${API_BASE_URL}/smartwatches/`);
+            const response = await fetch(`${API_BASE_URL}smartwatches/`);
             if (!response.ok) throw new Error('Error al cargar los smartwatches');
             const data = await response.json();
             setSmartwatches(data);
@@ -312,12 +313,12 @@ const SmartWatchManagerPage = () => {
 
     const fetchChildren = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/children/with-tutor-caregiver`);
+            const response = await fetch(`${API_BASE_URL}children/with-tutor-caregiver`);
             if (!response.ok) throw new Error('Error al cargar los niños');
             const data = await response.json();
 
             // Obtener smartwatches para verificar cuáles niños ya tienen uno asignado
-            const swResponse = await fetch(`${API_BASE_URL}/smartwatches/`);
+            const swResponse = await fetch(`${API_BASE_URL}smartwatches/`);
             const smartwatchesData = await swResponse.json();
 
             // Crear un Set de IDs de niños que ya tienen smartwatch
@@ -351,7 +352,7 @@ const SmartWatchManagerPage = () => {
         setSuccess(null);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/smartwatches/`, {
+            const response = await fetch(`${API_BASE_URL}smartwatches/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
@@ -380,7 +381,7 @@ const SmartWatchManagerPage = () => {
         setSuccess(null);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/smartwatches/${selectedSmartwatch.id_smartwatch}`, {
+            const response = await fetch(`${API_BASE_URL}smartwatches/${selectedSmartwatch.id_smartwatch}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -417,7 +418,7 @@ const SmartWatchManagerPage = () => {
         setSuccess(null);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/smartwatches/${smartwatchId}`, {
+            const response = await fetch(`${API_BASE_URL}smartwatches/${smartwatchId}`, {
                 method: 'DELETE',
             });
 
@@ -442,7 +443,7 @@ const SmartWatchManagerPage = () => {
         setSuccess(null);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/smartwatches/activate`, {
+            const response = await fetch(`${API_BASE_URL}smartwatches/activate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
