@@ -455,7 +455,8 @@ const styles = {
     container: {
         minHeight: '100vh',
         backgroundColor: 'var(--background)',
-        padding: '20px',
+        padding: '5rem',
+        paddingTop: '20px',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     },
     loadingContainer: {
