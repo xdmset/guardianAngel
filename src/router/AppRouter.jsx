@@ -17,6 +17,7 @@ import TutorDashboard from '../views/tutor/TutorDashboard';
 
 import RegistrationPage from '../views/admin/RegistrationPage';
 import ChildManager from '../views/admin/ChildManager';
+import ScheduleManager from '../views/admin/ScheduleManager';
 
 
 const AppRouter = () => {
@@ -58,6 +59,7 @@ const AppRouter = () => {
             <Route path="/admin/smartwatches" element={<SmartwatchManagerPage />} />
             <Route path="/admin/registration" element={<RegistrationPage />} />
             <Route path="/admin/children" element={<ChildManager />} />
+            <Route path="/admin/schedule" element={<ScheduleManager />} />
 
             <Route path="/tutor/index" element={<TutorIndex />} />
             <Route path="/tutor/niño/:id" element={<ChildDetailsTutor />} />
