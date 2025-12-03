@@ -1,0 +1,95 @@
+/* Contenedor flexible para alinear visualizador y botón */
+.miniContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 48px; /* Misma altura que el botón de agregar */
+  background: rgba(255, 255, 255, 0.15); /* Fondo sutil semi-transparente */
+  padding: 0 10px 0 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.miniContainer:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Área donde se mueven las barras */
+.visualizerArea {
+  width: 60px; /* Espacio fijo para las barras */
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bars {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  height: 100%;
+}
+
+/* Las barras blancas para el header azul */
+.miniBar {
+  width: 4px;
+  background: #fff;
+  border-radius: 2px;
+  min-height: 4px;
+  animation: equalize 0.6s ease-in-out infinite alternate;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes equalize {
+  0% { height: 20%; opacity: 0.6; }
+  100% { height: 100%; opacity: 1; }
+}
+
+/* Botón Circular Pequeño */
+.miniButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: var(--primary); /* Usa el color naranja/azul de tu tema */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.miniButton:hover {
+  transform: scale(1.1);
+  background: #f0f0f0;
+}
+
+.miniButton.active {
+  background: #ff4757;
+  color: white;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 71, 87, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+}
+
+/* Responsive: Ocultar visualizador en pantallas muy pequeñas para ahorrar espacio */
+@media (max-width: 480px) {
+  .visualizerArea {
+    display: none;
+  }
+  .miniContainer {
+    gap: 0;
+    padding: 5px;
+    background: transparent;
+    border: none;
+  }
+}

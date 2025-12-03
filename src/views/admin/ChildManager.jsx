@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, X, Save, Search, Calendar, Users, Baby, AlertCircle, Watch } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Save, Search, Calendar, Users, Baby, AlertCircle, Watch, Check } from 'lucide-react';
 import api from '../../config/apiConfig';
 
-const API_URL = api.baseUrl
-
+const API_URL = api.baseUrl;
 
 const ChildManager = () => {
     const [children, setChildren] = useState([]);
@@ -11,20 +10,26 @@ const ChildManager = () => {
     const [tutors, setTutors] = useState([]);
     const [caregivers, setCaregivers] = useState([]);
     const [smartwatches, setSmartWatches] = useState([]);
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [currentChild, setCurrentChild] = useState({
+
+    // Estado inicial del formulario (Incluye profile_image por defecto)
+    const initialFormState = {
         first_name: '',
         last_name: '',
         birth_date: '',
         id_daycare: '',
         id_tutor: '',
         id_caregiver: '',
-        id_smartwatch: ''
-    });
+        id_smartwatch: '',
+        profile_image: '/niño.png' // Valor por defecto
+    };
+
+    const [currentChild, setCurrentChild] = useState(initialFormState);
 
     useEffect(() => {
         loadAllData();
@@ -102,6 +107,7 @@ const ChildManager = () => {
     };
 
     const calculateAge = (birthDate) => {
+        if (!birthDate) return '-';
         const today = new Date();
         const birth = new Date(birthDate);
         let age = today.getFullYear() - birth.getFullYear();
@@ -113,59 +119,55 @@ const ChildManager = () => {
     };
 
     const openModal = (child = null) => {
+        setError(null);
         if (child) {
             setIsEditing(true);
 
-            // Buscar los IDs reales desde los datos cargados para pre-llenar el formulario
-            // Nota: Asumimos que el backend envía los nombres, buscamos el ID correspondiente
-            const daycare = daycares.find(d => d.name === child.daycare_name);
-            const tutor = tutors.find(t =>
-                t.first_name === child.tutor_first_name &&
-                t.last_name === child.tutor_last_name
-            );
-            const caregiver = caregivers.find(c =>
-                c.first_name === child.caregiver_first_name &&
-                c.last_name === child.caregiver_last_name
-            );
-            // Para smartwatch, el child ya trae id_smartwatch o device_id, buscamos coincidencia
-            const sw = smartwatches.find(s => s.device_id === child.device_id);
+            // Lógica para encontrar los IDs correctos si el backend devuelve nombres
+            const daycareId = child.id_daycare || daycares.find(d => d.name === child.daycare_name)?.id_daycare || '';
+            
+            // Buscar ID de Smartwatch
+            let swId = child.id_smartwatch || '';
+            if (!swId && child.device_id) {
+                const foundSw = smartwatches.find(s => s.device_id === child.device_id);
+                if (foundSw) swId = foundSw.id_smartwatch;
+            }
+
+            // Buscar ID de Tutor
+            let tutorId = child.id_tutor || '';
+            if (!tutorId && child.tutor_first_name) {
+                const foundTutor = tutors.find(t => t.first_name === child.tutor_first_name && t.last_name === child.tutor_last_name);
+                if (foundTutor) tutorId = foundTutor.id_user;
+            }
+
+            // Buscar ID de Cuidador
+            let caregiverId = child.id_caregiver || '';
+            if (!caregiverId && child.caregiver_first_name) {
+                const foundCaregiver = caregivers.find(c => c.first_name === child.caregiver_first_name && c.last_name === child.caregiver_last_name);
+                if (foundCaregiver) caregiverId = foundCaregiver.id_user;
+            }
 
             setCurrentChild({
                 id_child: child.id_child,
-                first_name: child.child_first_name,
-                last_name: child.child_last_name,
+                first_name: child.child_first_name || child.first_name,
+                last_name: child.child_last_name || child.last_name,
                 birth_date: child.birth_date,
-                id_daycare: daycare?.id_daycare || '',
-                id_tutor: tutor?.id_user || '',
-                id_caregiver: caregiver?.id_user || '',
-                id_smartwatch: sw?.id_smartwatch || ''
+                profile_image: child.profile_image || '/niño.png', // Carga la imagen actual o pone default
+                id_daycare: daycareId,
+                id_tutor: tutorId,
+                id_caregiver: caregiverId,
+                id_smartwatch: swId
             });
         } else {
             setIsEditing(false);
-            setCurrentChild({
-                first_name: '',
-                last_name: '',
-                birth_date: '',
-                id_daycare: '',
-                id_tutor: '',
-                id_caregiver: '',
-                id_smartwatch: ''
-            });
+            setCurrentChild(initialFormState);
         }
         setIsModalOpen(true);
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
-        setCurrentChild({
-            first_name: '',
-            last_name: '',
-            birth_date: '',
-            id_daycare: '',
-            id_tutor: '',
-            id_caregiver: '',
-            id_smartwatch: ''
-        });
+        setCurrentChild(initialFormState);
         setError(null);
     };
 
@@ -177,20 +179,38 @@ const ChildManager = () => {
         }));
     };
 
+    // Función para manejar la selección de imagen
+    const handleImageSelect = (imagePath) => {
+        setCurrentChild(prev => ({
+            ...prev,
+            profile_image: imagePath
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Validación básica
+        if (!currentChild.first_name || !currentChild.last_name || !currentChild.birth_date || !currentChild.id_daycare || !currentChild.id_tutor) {
+            setError("Por favor completa los campos obligatorios (*)");
+            return;
+        }
+
         setLoading(true);
         setError(null);
 
         try {
+            // Construir payload limpio con tipos correctos
             const payload = {
                 first_name: currentChild.first_name,
                 last_name: currentChild.last_name,
                 birth_date: currentChild.birth_date,
+                profile_image: currentChild.profile_image, // Se envía la imagen seleccionada
                 id_daycare: parseInt(currentChild.id_daycare),
                 id_tutor: parseInt(currentChild.id_tutor),
-                id_caregiver: currentChild.id_caregiver ? parseInt(currentChild.id_caregiver) : 0,
-                id_smartwatch: currentChild.id_smartwatch ? parseInt(currentChild.id_smartwatch) : 0
+                // Enviar null si es vacío para evitar error de FK
+                id_caregiver: currentChild.id_caregiver ? parseInt(currentChild.id_caregiver) : null,
+                id_smartwatch: currentChild.id_smartwatch ? parseInt(currentChild.id_smartwatch) : null
             };
 
             let response;
@@ -217,11 +237,7 @@ const ChildManager = () => {
                 throw new Error(errorData.error || 'Error al guardar el niño');
             }
 
-            const result = await response.json();
-            console.log('Respuesta del servidor:', result);
-
             await loadChildren();
-
             closeModal();
             alert(isEditing ? '✅ Niño actualizado correctamente' : '✅ Niño creado correctamente');
         } catch (err) {
@@ -258,11 +274,16 @@ const ChildManager = () => {
         }
     };
 
-    const filteredChildren = children.filter(child =>
-        child.child_first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        child.child_last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        child.daycare_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredChildren = children.filter(child => {
+        const fname = child.child_first_name || child.first_name || '';
+        const lname = child.child_last_name || child.last_name || '';
+        const dname = child.daycare_name || '';
+        const term = searchTerm.toLowerCase();
+
+        return fname.toLowerCase().includes(term) ||
+               lname.toLowerCase().includes(term) ||
+               dname.toLowerCase().includes(term);
+    });
 
     if (loading && children.length === 0) {
         return (
@@ -341,12 +362,16 @@ const ChildManager = () => {
                             <tr key={child.id_child} style={styles.tableRow}>
                                 <td style={styles.td}>
                                     <div style={styles.nameCell}>
-                                        {/* <div style={styles.avatar}>
-                                            {child.child_first_name[0]}{child.child_last_name[0]}
-                                        </div> */}
+                                        <div style={styles.avatar}>
+                                            <img 
+                                                src={child.profile_image || `https://ui-avatars.com/api/?name=${child.child_first_name}+${child.child_last_name}&background=random`} 
+                                                alt="avatar" 
+                                                style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}}
+                                            />
+                                        </div>
                                         <div>
                                             <p style={styles.childName}>
-                                                {child.child_first_name} {child.child_last_name}
+                                                {child.child_first_name || child.first_name} {child.child_last_name || child.last_name}
                                             </p>
                                             <p style={styles.childDate}>
                                                 <Calendar size={12} />
@@ -365,7 +390,7 @@ const ChildManager = () => {
                                     {child.tutor_first_name} {child.tutor_last_name}
                                 </td>
 
-                                {/* COLUMNA NUEVA: SMARTWATCH ID */}
+                                {/* COLUMNA SMARTWATCH */}
                                 <td style={styles.td}>
                                     {child.device_id ? (
                                         <div style={styles.smartwatchBadge}>
@@ -393,14 +418,14 @@ const ChildManager = () => {
                                         >
                                             <Edit2 size={16} />
                                         </button>
-                                        {/* <button
+                                        <button
                                             style={styles.deleteButton}
                                             onClick={() => handleDelete(child.id_child)}
                                             title="Eliminar"
                                             disabled={loading}
                                         >
                                             <Trash2 size={16} />
-                                        </button> */}
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -427,7 +452,7 @@ const ChildManager = () => {
                             </button>
                         </div>
 
-                        <div style={styles.formContainer}>
+                        <form onSubmit={handleSubmit} style={styles.formContainer}>
                             {error && (
                                 <div style={styles.errorBox}>
                                     <AlertCircle size={18} />
@@ -445,7 +470,7 @@ const ChildManager = () => {
                                         onChange={handleInputChange}
                                         style={styles.input}
                                         required
-                                        placeholder={isEditing ? currentChild.first_name : "Ej: Juan"}
+                                        placeholder="Ej: Juan"
                                     />
                                 </div>
 
@@ -458,8 +483,40 @@ const ChildManager = () => {
                                         onChange={handleInputChange}
                                         style={styles.input}
                                         required
-                                        placeholder={isEditing ? currentChild.last_name : "Ej: Pérez"}
+                                        placeholder="Ej: Pérez"
                                     />
+                                </div>
+
+                                {/* SELECCIÓN DE IMAGEN / GÉNERO */}
+                                <div style={{...styles.formGroup, gridColumn: 'span 2'}}>
+                                    <label style={styles.label}>Avatar / Género *</label>
+                                    <div style={styles.avatarSelectionContainer}>
+                                        <div 
+                                            style={{
+                                                ...styles.avatarOption,
+                                                borderColor: currentChild.profile_image === '/niño.png' ? 'var(--head-bg)' : '#E5E7EB',
+                                                backgroundColor: currentChild.profile_image === '/niño.png' ? '#EFF6FF' : 'white'
+                                            }}
+                                            onClick={() => handleImageSelect('/niño.png')}
+                                        >
+                                            <img src="/niño.png" alt="Niño" style={styles.avatarPreview} />
+                                            <span style={styles.avatarLabel}>Niño</span>
+                                            {currentChild.profile_image === '/niño.png' && <Check size={16} color="var(--head-bg)" />}
+                                        </div>
+
+                                        <div 
+                                            style={{
+                                                ...styles.avatarOption,
+                                                borderColor: currentChild.profile_image === '/niña.png' ? 'var(--head-bg)' : '#E5E7EB',
+                                                backgroundColor: currentChild.profile_image === '/niña.png' ? '#EFF6FF' : 'white'
+                                            }}
+                                            onClick={() => handleImageSelect('/niña.png')}
+                                        >
+                                            <img src="/niña.png" alt="Niña" style={styles.avatarPreview} />
+                                            <span style={styles.avatarLabel}>Niña</span>
+                                            {currentChild.profile_image === '/niña.png' && <Check size={16} color="var(--head-bg)" />}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div style={styles.formGroup}>
@@ -467,13 +524,10 @@ const ChildManager = () => {
                                     <input
                                         type="date"
                                         name="birth_date"
-                                        // value={currentChild.birth_date}
-                                        // value={new Date(currentChild.birth_date).toISOString().split("T")[0]}
-                                        value={new Date(currentChild.birth_date).toISOString().split("T")[0]}
+                                        value={currentChild.birth_date ? new Date(currentChild.birth_date).toISOString().split("T")[0] : ''}
                                         onChange={handleInputChange}
                                         style={styles.input}
                                         required
-                                        placeholder={isEditing ? currentChild.birth_date : ""}
                                     />
                                 </div>
 
@@ -496,7 +550,7 @@ const ChildManager = () => {
                                 </div>
 
                                 <div style={styles.formGroup}>
-                                    <label style={styles.label}>Tutor *</label>
+                                    <label style={styles.label}>Tutor (Padre) *</label>
                                     <select
                                         name="id_tutor"
                                         value={currentChild.id_tutor}
@@ -505,9 +559,9 @@ const ChildManager = () => {
                                         required
                                     >
                                         <option value="">Seleccione un tutor</option>
-                                        {tutors.map(tutor => (
-                                            <option key={tutor.id_user} value={tutor.id_user}>
-                                                {tutor.first_name} {tutor.last_name}
+                                        {tutors.map(t => (
+                                            <option key={t.id_user} value={t.id_user}>
+                                                {t.first_name} {t.last_name}
                                             </option>
                                         ))}
                                     </select>
@@ -521,7 +575,7 @@ const ChildManager = () => {
                                         onChange={handleInputChange}
                                         style={styles.select}
                                     >
-                                        <option value="">Sin cuidador asignado</option>
+                                        <option value="">-- Sin cuidador asignado --</option>
                                         {caregivers.map(caregiver => (
                                             <option key={caregiver.id_user} value={caregiver.id_user}>
                                                 {caregiver.first_name} {caregiver.last_name}
@@ -538,7 +592,7 @@ const ChildManager = () => {
                                         onChange={handleInputChange}
                                         style={styles.select}
                                     >
-                                        <option value="">Sin smartwatch asignado</option>
+                                        <option value="">-- Sin smartwatch asignado --</option>
                                         {smartwatches.map(sw => (
                                             <option key={sw.id_smartwatch} value={sw.id_smartwatch}>
                                                 {sw.device_id} ({sw.status})
@@ -567,12 +621,13 @@ const ChildManager = () => {
                                         'Guardando...'
                                     ) : (
                                         <>
+                                            <Save size={18} />
                                             {isEditing ? 'Actualizar' : 'Guardar'}
                                         </>
                                     )}
                                 </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             )}
@@ -844,7 +899,8 @@ const styles = {
         justifyContent: 'center',
         fontWeight: '700',
         fontSize: '14px',
-        textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+        textShadow: '0 1px 2px rgba(0,0,0,0.1)',
+        overflow: 'hidden'
     },
     childName: {
         margin: '0',
@@ -1058,6 +1114,38 @@ const styles = {
         gap: '8px',
         transition: 'var(--transition)',
         boxShadow: '0 2px 5px rgba(36, 90, 178, 0.2)'
+    },
+
+    // --- NUEVOS ESTILOS PARA SELECCIÓN DE AVATAR ---
+    avatarSelectionContainer: {
+        display: 'flex',
+        gap: '16px',
+        marginTop: '8px'
+    },
+    avatarOption: {
+        flex: 1,
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderRadius: '8px',
+        padding: '12px',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        transition: 'all 0.2s ease',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+    },
+    avatarPreview: {
+        width: '40px',
+        height: '40px',
+        borderRadius: '50%',
+        objectFit: 'cover'
+    },
+    avatarLabel: {
+        fontSize: '14px',
+        fontWeight: '600',
+        color: 'var(--text-color)',
+        flex: 1
     }
 };
 

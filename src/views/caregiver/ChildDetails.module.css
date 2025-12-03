@@ -7,9 +7,8 @@
   padding: 2rem;
   font-family: 'Poppins', 'Inter', sans-serif;
   color: var(--text-color);
-  /* background-color: var(--background); */
+  position: relative; /* Importante para los bg images */
 }
-
 
 /* -------------------- Header Infantil ---------- */
 .header {
@@ -53,6 +52,7 @@
   display: flex;
   align-items: center;
   gap: 1.3rem;
+  flex: 1; /* Para que tome espacio disponible */
 }
 
 .avatar img {
@@ -69,11 +69,21 @@
   transform: scale(1.08);
 }
 
+.nameBlock {
+  min-width: 0; /* Evita desbordamiento en móviles */
+}
 
 .childName {
   margin: 0;
   font-size: 2rem;
   font-weight: 800;
+  line-height: 1.2;
+}
+
+.welcome {
+  margin: 5px 0 0 0;
+  font-size: 1rem;
+  opacity: 0.9;
 }
 
 /* -------------------- Botones de acción ---------- */
@@ -104,7 +114,6 @@
   transform: translateY(-2px) scale(1.05);
 }
 
-
 /* -------------------- Botón volver ---------- */
 .backButton {
   background-color: #fff;
@@ -117,7 +126,6 @@
   margin-bottom: 1.5rem;
   display: inline-block;
   transition: 0.3s;
-  /* margin-top: 2.5%; */
 }
 .backButton:hover { transform: translateY(-2px); }
 
@@ -147,7 +155,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  
 }
 
 /* Right column */
@@ -160,19 +167,23 @@
 /* Cards fill height equally */
 .row > * {
   align-self: stretch;
-  
 }
 
+/* ESTA ES LA CLASE QUE CAMBIAREMOS EN RESPONSIVE */
 .row-notes-tutor {
   display: grid;
-  grid-template-columns: 68% 30%; /* <<< aquí */
-
+  grid-template-columns: 68% 30%; 
   align-items: stretch; /* asegura misma altura */
   justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .row-health {
   display: block;
+  width: 100%;
+}
+
+.rowFull {
   width: 100%;
 }
 
@@ -185,18 +196,18 @@
   border: 3px dashed #e8e8e8;
   transition: 0.25s ease;
   text-align: left;
+  height: 100%; /* Importante para flexbox */
+  box-sizing: border-box;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  /* border-color: var(--primary); */
   border: 3px solid var(--primary);
 }
 
 .notesCard, .cardActivities, .cardSugestion{
   height: 100%;
 }
-
 
 /* Títulos */
 .sectionTitle {
@@ -208,11 +219,11 @@
   border-bottom: 3px solid var(--secondary);
 }
 
-
 /* -------------------- Salud del niño ---------- */
 .healthGrid {
   display: flex;
   gap: 1.2rem;
+  flex-wrap: wrap; /* Permite wrap en móviles */
 }
 
 .healthCard {
@@ -223,8 +234,8 @@
   border: 1px solid #e8e8e8;
   text-align: center;
   cursor: pointer;
+  min-width: 150px; /* Para que no se aplasten demasiado */
 }
-
 
 .healthReading {
   font-size: 1.3rem;
@@ -292,8 +303,6 @@
   animation: oxygenPulseAnim 0.7s ease-in-out;
 }
 
-
-
 /* Listas */
 .list {
   list-style: none;
@@ -328,9 +337,7 @@
 
 .tutorCard:hover {
   border-left: 4px solid var(--primary);
-  /* background-color: #ECF7FF; */
 }
-
 
 /* MODAL DE NOTAS */
 .modalOverlay {
@@ -346,16 +353,17 @@
   align-items: center;
   text-align: left;
   z-index: 1000;
+  padding: 1rem; /* Padding para moviles */
 }
 
 /* Contenedor del modal */
 .modal {
   background: linear-gradient(180deg, #ffffff, #fafafa);
-  width: 90%;
+  width: 100%; /* Full width en movil respetando max-width */
   max-width: 520px;
   padding: 22px;
   border-radius: 15px;
-  max-height: 80vh;
+  max-height: 85vh;
   overflow-y: auto;
   box-shadow: 0 10px 20px rgba(0,0,0,0.12);
   border: .5px solid #1b1b1b41;
@@ -469,6 +477,7 @@
   border: 2px solid var(--accent-dark);
   background: var(--accent-faded);
   font-size: 1rem;
+  box-sizing: border-box; /* Asegura que no se salga del contenedor */
 }
 
 /* -----------------  Para botones de editar y eliminar  notas*/
@@ -509,34 +518,14 @@
   transform: scale(1.2);
 }
 
-  .modalFooterButton  {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .modal.show .modalFooterButton  {
-    opacity: 1;
-  }
-
-/* -------------------- Responsive ---------- */
-@media (max-width: 900px) {
-  .mainGrid {
-    
-    grid-template-columns: 1fr;
-  }
+.modalFooterButton  {
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-@media (max-width: 600px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .healthGrid {
-    grid-template-columns: 1fr;
-  }
+.modal.show .modalFooterButton  {
+  opacity: 1;
 }
-
 
 /* PARA EL BG IMAGE */
 /* Imagen decorativa en la esquina inferior derecha */
@@ -585,7 +574,7 @@
   image-rendering: -webkit-optimize-contrast;
 }
 
-/* ---- IMAGEN 2 (kid-toy) ---- */
+/* ---- IMAGEN 2 (kid-toy) - Ajuste responsivo abajo ---- */
 .container::after {
   content: "";
   position: fixed;
@@ -609,18 +598,18 @@
 }
 
 /* ---------------------------
-    CONTENEDOR PRINCIPAL
+    CONTENEDOR PRINCIPAL MEDICINAS
 ---------------------------- */
 .medicinesCard {
-
 }
 
 .medicinesHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding-bottom: 10px;
+  flex-wrap: wrap; /* Para moviles */
+  gap: 10px;
 }
 
 .medicinesHeader h3 {
@@ -752,16 +741,18 @@
   align-items: center;
   justify-content: center;
   z-index: 2000 !important;
+  padding: 15px; /* Para que no toque bordes en movil */
 }
 
 .modalContent {
   /* background: white; */
-  width: 90%;
+  width: 100%; /* Flexible */
   max-width: 460px;
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   animation: fadeIn 0.25s ease;
+  background: white; /* Asegurar fondo */
 }
 
 .modalContent h3 {
@@ -779,6 +770,7 @@
   margin-bottom: 12px;
   resize: none;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .form textarea {
@@ -790,6 +782,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
+  gap: 10px;
 }
 
 .saveButton {
@@ -800,6 +793,7 @@
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
+  flex: 1; /* Botones iguales en movil */
 }
 
 .saveButton:hover {
@@ -813,6 +807,7 @@
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  flex: 1;
 }
 
 .cancelButton:hover {
@@ -841,13 +836,15 @@
   justify-content: center;
   align-items: center;
   z-index: 100;
+  padding: 15px;
 }
 
 .addPopup {
   background: white;
   padding: 20px;
   border-radius: 16px;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   animation: fadeIn 0.25s ease;
 }
@@ -874,7 +871,7 @@
   background-color: #f2f7ff; /* azul muy suave de fondo */
   border-radius: 12px;
   padding: 12px;
-  min-width: 160px;
+  min-width: 160px; /* Ancho minimo para desktop */
   display: flex;
   flex-direction: column;
   max-height: 600px;
@@ -962,4 +959,92 @@
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* ==========================================================================
+   RESPONSIVE - CÓDIGO NUEVO Y MEJORADO PARA CELULAR 📱
+   ========================================================================== */
+
+/* Tablet y Pantallas Medianas (hasta 900px) */
+@media (max-width: 900px) {
+  .container {
+    padding: 1.5rem;
+    margin: 1rem auto;
+    width: 95%;
+  }
+  
+  /* Convertir la fila Notas/Tutor a vertical */
+  .row-notes-tutor {
+    grid-template-columns: 1fr; 
+    gap: 2rem;
+  }
+  
+  /* Convertir la fila Medicinas/Sugerencias a vertical */
+  .row {
+    grid-template-columns: 1fr;
+  }
+  
+  /* El horario en tablet se ve mejor con scroll horizontal */
+  .scheduleGrid {
+    padding-bottom: 20px;
+  }
+}
+
+/* Celulares (hasta 600px) */
+@media (max-width: 600px) {
+  
+  /* Header apilado */
+  .header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .childInfo {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  .nameBlock {
+    margin-top: 10px;
+  }
+
+  /* Grid de salud: Una tarjeta debajo de otra */
+  .healthGrid {
+    flex-direction: column;
+  }
+  
+  .healthCard {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Horario: Apilar días verticalmente (Lunes, abajo Martes...) */
+  .scheduleGrid {
+    display: flex;
+    flex-direction: column;
+    overflow-x: visible;
+  }
+  
+  .dayColumn {
+    width: 100%;
+    min-width: auto;
+    max-height: none; /* Dejar crecer si hay muchas actividades */
+  }
+
+  /* Ajustes Fondo (Ocultar juguete grande en celular) */
+  .container::after {
+    opacity: 0.1;
+    width: 250px;
+    height: 250px;
+    right: -50px;
+    bottom: -50px;
+  }
 }

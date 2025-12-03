@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBookMedical } from 'react-icons/fa';
 import { IoWarning } from 'react-icons/io5';
@@ -16,140 +16,81 @@ const CaregiverDashboard = () => {
   const [error, setError] = useState('');
   const [healthStatus, setHealthStatus] = useState({});
   
-  // Para rastrear qué niños ya enviaron alerta
-  const alertedChildren = useRef(new Set());
-
-  // 1. CARGAR LISTA DE NIÑOS
+  // 1. CARGAR NIÑOS
   useEffect(() => {
     const fetchChildren = async () => {
       try {
         setLoading(true);
         const token = localStorage.getItem("accessToken");
-
-        console.log('🔍 Cargando niños para usuario:', user.id);
-
         const response = await fetch(
           `http://127.0.0.1:5000/api/caregiver/${user.id}/children`,
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
 
-        if (!response.ok) {
-          throw new Error("Error cargando la lista de niños");
-        }
+        if (!response.ok) throw new Error("Error cargando la lista de niños");
 
         const data = await response.json();
-        console.log('✅ Niños cargados:', data);
         setChildren(data);
       } catch (err) {
-        console.error('❌ Error cargando niños:', err);
+        console.error(' Error cargando niños:', err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    if (user?.id) {
-      fetchChildren();
-    }
+    if (user?.id) fetchChildren();
   }, [user]);
 
-  // 2. LÓGICA DE IA CON NOTIFICACIONES
+  // 2. LÓGICA DE IA Y SENSORES
   useEffect(() => {
-    if (children.length === 0) {
-      console.log('⏸️ No hay niños para analizar');
-      return;
-    }
-
-    console.log('🤖 Iniciando análisis de salud para', children.length, 'niños');
+    if (children.length === 0) return;
 
     const checkHealth = async () => {
       const newStatuses = {};
 
       await Promise.all(children.map(async (child) => {
-        console.log(`\n👶 Analizando niño: ${child.first_name} (ID: ${child.id_child})`);
-        console.log(`   Smartwatch ID: ${child.id_smartwatch}`);
-
-        if (!child.id_smartwatch) {
-          console.log('   ⚠️ No tiene smartwatch asignado');
-          return;
-        }
+        if (!child.id_smartwatch) return;
 
         try {
           const url = `${api.baseUrl}readings/smartwatch/${child.id_smartwatch}/latest`;
-          console.log(`   📡 Consultando: ${url}`);
-          
           const res = await fetch(url);
-          console.log(`   📊 Status respuesta: ${res.status}`);
           
           if (res.ok) {
             const reading = await res.json();
-            console.log('   📈 Lectura obtenida:', reading);
-            
             const bpm = reading.heart_rate?.beats_per_minute || 0;
             const temp = reading.temperature?.temperature || 0;
             const oxy = reading.oxygenation?.spo2_level || 0;
 
-            console.log(`   💓 BPM: ${bpm}, 🌡️ Temp: ${temp}, 🫁 O2: ${oxy}`);
-
-            // Llamada a la IA
-            console.log('   🧠 Enviando a IA...');
+            // Análisis de modelo
             const analysis = await analyzeHealth(bpm, temp, oxy);
-            console.log('   🎯 Resultado IA:', analysis);
             
             newStatuses[child.id_child] = analysis;
-            console.log(`   ${analysis.is_critical ? '🔴 CRÍTICO' : '🟢 NORMAL'}: ${analysis.message}`);
             
-            // 🚨 ENVIAR NOTIFICACIÓN SI ES CRÍTICO Y NO SE HA ALERTADO ANTES
-            if (analysis.is_critical && !alertedChildren.current.has(child.id_child)) {
-              console.log('🔔 Enviando notificación para', child.first_name);
-              
+            if (analysis.is_critical) {
               addAlert({
                 id_child: child.id_child,
                 first_name: child.first_name,
                 last_name: child.last_name,
                 message: analysis.message
               });
-              
-              // Marcar como alertado
-              alertedChildren.current.add(child.id_child);
             }
-            
-            // Si ya no es crítico, permitir nueva alerta en el futuro
-            if (!analysis.is_critical && alertedChildren.current.has(child.id_child)) {
-              alertedChildren.current.delete(child.id_child);
-            }
-            
-          } else {
-            console.log('   ❌ No se pudo obtener lectura del smartwatch');
           }
         } catch (err) {
-          console.error(`   💥 Error analizando niño ${child.id_child}:`, err);
+          console.error(`Error analizando niño ${child.id_child}:`, err);
         }
       }));
 
-      console.log('\n📦 Estados finales a guardar:', newStatuses);
-      setHealthStatus(prev => {
-        const updated = {...prev, ...newStatuses};
-        console.log('✨ Estado actualizado:', updated);
-        return updated;
-      });
+      setHealthStatus(prev => ({...prev, ...newStatuses}));
     };
 
+    // Ejecutar inmediatamente y luego cada 10 segundos
     checkHealth();
+    const interval = setInterval(checkHealth, 10000);
     
-    const interval = setInterval(() => {
-      console.log('⏰ Recheck automático cada 10s');
-      checkHealth();
-    }, 10000);
-    
-    return () => {
-      console.log('Limpiando intervalo');
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
 
   }, [children, addAlert]);
 
@@ -160,7 +101,7 @@ const CaregiverDashboard = () => {
     <div className={styles.pageContainer}>
       <h1 className={styles.pageTitle}>Mis Niños Asignados</h1>
       <p className={styles.pageSubtitle}>
-        Aquí encontrarás la lista de niños bajo tu cuidado. Selecciona uno para ver sus detalles.
+        Aquí encontrarás la lista de niños bajo tu cuidado.
       </p>
 
       <div className={styles.grid}>
@@ -168,25 +109,22 @@ const CaregiverDashboard = () => {
           const status = healthStatus[child.id_child];
           const isCritical = status?.is_critical;
           
-          let cardClassName = styles.card;
-          if (status) {
-            cardClassName = isCritical 
+          const cardClassName = isCritical 
               ? `${styles.card} ${styles.cardCritical}`
               : `${styles.card} ${styles.cardSafe}`;
-          }
 
           return (
             <div key={child.id_child} className={cardClassName}>
-              
               {isCritical && (
                 <div className={styles.alertBadge}>
                   <IoWarning /> RIESGO DETECTADO
                 </div>
               )}
 
+              {/* AQUÍ ESTÁ EL CAMBIO PARA LA IMAGEN */}
               <img 
-                src={`https://ui-avatars.com/api/?name=${child.first_name}&background=FEE9D6&color=5A6B8A`} 
-                alt={`${child.first_name} avatar`} 
+                src={child.profile_image || `https://ui-avatars.com/api/?name=${child.first_name}&background=FEE9D6&color=5A6B8A`} 
+                alt={`${child.first_name}`} 
                 className={styles.cardImage}
               />
 

@@ -4,7 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useNotifications } from '../../context/NotificationContext';
 import styles from './Navbar.module.css';
 import logoutIcon from '../../assets/img/logout.png';
-import logo from '../../assets/logomercy.png'; // <--- Tu logo importado
+import logo from '../../assets/logomercy.png'; 
 import { FaBars, FaTimes, FaBell } from 'react-icons/fa';
 
 const Navbar = () => {
@@ -43,12 +43,17 @@ const Navbar = () => {
           onClick={closeMenu}
         >
       
-<img 
-  src={logo} 
-  alt="Guardian Angel" 
- 
-  style={{ height: '50px', width: 'auto' }} 
-/>
+          <img 
+            src={logo} 
+            alt="Guardian Angel" 
+            style={{ 
+              height: '50px', 
+              width: 'auto', 
+              borderRadius: '0',      
+              objectFit: 'contain',   
+              display: 'block'        
+            }} 
+          />
           <span>Guardian Angel</span>
         </NavLink>
 
