@@ -147,7 +147,7 @@ const CaregiverDashboard = () => {
     }, 10000);
     
     return () => {
-      console.log('🛑 Limpiando intervalo');
+      console.log('Limpiando intervalo');
       clearInterval(interval);
     };
 
@@ -184,9 +184,9 @@ const CaregiverDashboard = () => {
                 </div>
               )}
 
-              <img
-                src={`https://i.pravatar.cc/300?u=${child.first_name}`}
-                alt={child.first_name}
+              <img 
+                src={`https://ui-avatars.com/api/?name=${child.first_name}&background=FEE9D6&color=5A6B8A`} 
+                alt={`${child.first_name} avatar`} 
                 className={styles.cardImage}
               />
 

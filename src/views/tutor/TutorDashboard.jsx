@@ -75,9 +75,9 @@ const TutorDashboard = () => {
       <div className={styles.grid}>
         {children.map((child) => (
           <div key={child.id_child} className={styles.card}>
-            <img
-              src={`https://i.pravatar.cc/300?u=${child.first_name}`}
-              alt={child.first_name}
+            <img 
+              src={`https://ui-avatars.com/api/?name=${child.first_name}&background=FEE9D6&color=5A6B8A`} 
+              alt={`${child.first_name} avatar`} 
               className={styles.cardImage}
             />
 

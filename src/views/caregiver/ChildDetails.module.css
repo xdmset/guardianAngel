@@ -147,6 +147,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  
 }
 
 /* Right column */
@@ -605,4 +606,360 @@
   /* Mejor calidad */
   image-rendering: crisp-edges;
   image-rendering: -webkit-optimize-contrast;
+}
+
+/* ---------------------------
+    CONTENEDOR PRINCIPAL
+---------------------------- */
+.medicinesCard {
+
+}
+
+.medicinesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 10px;
+}
+
+.medicinesHeader h3 {
+  color: var(--title-color);
+  font-size: 1.4rem;
+}
+
+.addMedicineButton {
+  padding: 8px 14px;
+  font-weight: bold;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.addMedicineButton:hover {
+  background: #d57e53;
+  transform: translateY(-1px);
+}
+
+/* ---------------------------
+    LISTA DE MEDICAMENTOS
+---------------------------- */
+.medicinesList {
+  margin-top: 18px;
+  min-height: 130px;   /* altura mínima, siempre se ve algo */
+  max-height: 130px;   /* altura máxima antes de aparecer scroll */
+  overflow-y: auto;    /* activa scroll cuando se excede max-height */
+  padding-right: 6px;  /* espacio para scrollbar */
+}
+
+
+.medicinesList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.medicinesList::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.medicinesList::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+.medicinesList::-webkit-scrollbar-thumb:hover {
+  background: #245ab2;
+}
+
+.medicineItem {
+  border-bottom: 3px dashed var(--accent);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+}
+
+.medicineItem h4 {
+  margin: 0;
+  color: #245ab2;
+  font-size: 1.2rem;
+}
+
+.medicineItem p {
+  margin: 5px 0 10px;
+  color: #333;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: var(--muted-text);
+}
+
+.actionsRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.editButton {
+  padding: 6px 12px;
+  background: var(--secondary);
+  border-radius: 8px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background: #6cc5bb;
+}
+
+.deleteButton {
+  padding: 6px 12px;
+  background: #e94f4f;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background: #bf3e3e;
+}
+
+/* ---------------------------
+      TEXTO SIN REGISTROS
+---------------------------- */
+.emptyText {
+  color: #777;
+  font-style: italic;
+  padding: 15px 0;
+}
+
+/* ---------------------------
+            MODAL
+---------------------------- */
+.modalBackdrop {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: rgba(0,0,0,0.55); */
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000 !important;
+}
+
+.modalContent {
+  /* background: white; */
+  width: 90%;
+  max-width: 460px;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  animation: fadeIn 0.25s ease;
+}
+
+.modalContent h3 {
+  margin-top: 0;
+  color: var(--title-color);
+}
+
+/* FORM */
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  resize: none;
+  font-size: 1rem;
+}
+
+.form textarea {
+  min-height: 100px;
+}
+
+/* BOTONES DEL MODAL */
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.saveButton {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  background: #d37a51;
+}
+
+.cancelButton {
+  background: #ccc;
+  color: #333;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background: #b7b7b7;
+}
+
+/* ANIMACION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+.addPopupOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.addPopup {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  width: 400px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* -------------------------------- HORARIO .JSX */
+
+/* Contenedor general de la sección */
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 16px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+}
+
+/* Cada columna de día */
+.dayColumn {
+  background-color: #f2f7ff; /* azul muy suave de fondo */
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+}
+
+/* Título del día */
+.dayTitle {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #245AB2; /* color de tu paleta */
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 4px;
+}
+
+/* Tarjeta de actividad */
+.activityCard {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.activityCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+/* Hora de la actividad */
+.activityTime {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+/* Nombre de la actividad */
+.activityName {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #018061; /* color principal de títulos */
+}
+
+/* Descripción */
+.activityDescription {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.2rem;
+}
+
+/* Texto cuando no hay actividad */
+.noActivity {
+  font-size: 0.85rem;
+  color: #a0aec0;
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Scroll horizontal bonito */
+.scheduleGrid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scheduleGrid::-webkit-scrollbar-thumb {
+  background-color: #8ED6CB;
+  border-radius: 4px;
+}
+
+.scheduleGrid::-webkit-scrollbar-track {
+  background-color: #e2e8f0;
+  border-radius: 4px;
+}
+
+/* Ajustes generales de la sección */
+.cardActivities {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }

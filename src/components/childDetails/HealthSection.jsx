@@ -130,7 +130,7 @@ const HealthSection = ({ smartwatchId, heartRate, temperature, oxygenation, puls
             <h3 style={{ textAlign: "center", marginBottom: "10px" }}>
               {selectedChart === "heart" && "Historial de Ritmo Cardíaco (LPM)"}
               {selectedChart === "oxygen" && "Historial de Oxigenación (%)"}
-              {selectedChart === "temp" && "Temperatura Corporal"}
+              {/* {selectedChart === "temp" && "Temperatura Corporal"} */}
             </h3>
 
             {/* Heart chart */}
@@ -174,11 +174,11 @@ const HealthSection = ({ smartwatchId, heartRate, temperature, oxygenation, puls
             )}
 
             {/* Temp chart */}
-            {selectedChart === "temp" && (
+            {/* {selectedChart === "temp" && (
               <p style={{ textAlign: "center", padding: "20px 0" }}>
                 (No hay datos de temperatura disponibles actualmente)
               </p>
-            )}
+            )} */}
 
           </div>
         )}

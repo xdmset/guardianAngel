@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FaPlus, FaCalendarAlt, FaUtensils, FaGamepad } from 'react-icons/fa';
+import { FaPlus, FaPills, FaCalendarAlt, FaUtensils, FaGamepad } from 'react-icons/fa';
 import { FaHeartPulse, FaTemperatureThreeQuarters } from 'react-icons/fa6';
 import styles from './ChildDetails.module.css';
 import api from '../../config/apiConfig';
@@ -15,6 +15,7 @@ import EditNoteModal from '../../components/childDetails/EditNoteModal';
 import HealthSection from '../../components/childDetails/HealthSection';
 import SuggestionsSection from '../../components/childDetails/SuggestionsSection';
 import Horario from '../../components/childDetails/Horario';
+import MedicinesSection from '../../components/childDetails/MedicinesSection';
 
 const ChildDetails = () => {
   // Estados y variables
@@ -45,18 +46,33 @@ const ChildDetails = () => {
     priority: "medium",
   });
 
+  const [showMedModal, setShowMedModal] = useState(false);
+
   // Funciones para manejar notas (se usa para actualizar cuando se edita, postea, o elimina, etc)
   const loadNotes = async () => {
     try {
       const res = await fetch(`${api.baseUrl}children/${id}/notes`);
       const data = await res.json();
-      data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      setNotes(data);
+
+      console.log("Loaded notes:", data);
+
+      // Filtrar solo prioridades low y medium
+      const filtered = data.filter(n => 
+        n.priority === "low" || n.priority === "medium"
+      );
+
+      // Ordenar por fecha (más recientes primero)
+      filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      setNotes(filtered);
     } catch (err) {
       console.error("Error loading notes:", err);
     }
   };
   useEffect(() => { loadNotes(); }, [id]);
+
+
+
 
   // Agregar nota
   const handleAddNote = async (e) => {
@@ -164,6 +180,8 @@ const ChildDetails = () => {
     return () => clearInterval(interval);
   }, [child]);
 
+
+
   if (loading) return <h2 className={styles.loading}>Cargando datos...</h2>;
 
   return (
@@ -242,10 +260,11 @@ const ChildDetails = () => {
         {/* ------------- ROW 3 : ACTIVIDADES + ALIMENTACIÓN ------------- */}
         <div className={styles.row}>
 
-          <div className={styles.colLeft}>
-            <Horario childId={child.id_child} />
+          {/* --- card de Medicamentos --- */}
+          <div className={`${styles.colLeft} `}>
+            <MedicinesSection childId={child.id_child} />
           </div>
-
+          
           {/* Seccion de sugestion para recomendaciones */}
           <div className={`${styles.colRight} `}>
             <SuggestionsSection smartwatchId={child.id_smartwatch} />
@@ -253,9 +272,14 @@ const ChildDetails = () => {
 
         </div>
 
+        {/* ------------- ROW 4 : SCHEDULE ------------- */}
+      <div className={styles.rowFull}>
+        <Horario childId={child.id_child} />
+      </div>
+
       </main>
 
-
+      
       {/* --------------------- MODALES --------------------- */}
       <NotesModal
         show={showNotesModal}
@@ -282,6 +306,7 @@ const ChildDetails = () => {
         setEditingNote={setEditingNote}
         handleEditNote={handleEditNote}
       />
+ 
 
     </div>
   );

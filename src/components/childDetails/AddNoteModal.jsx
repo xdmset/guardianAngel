@@ -43,10 +43,11 @@ const AddNoteModal = ({
           <select
             value={newNote.priority}
             onChange={(e) => setNewNote({ ...newNote, priority: e.target.value })}
+            style={{ display: "none" }}
           >
-            <option value="low">Baja</option>
-            <option value="medium">Media</option>
-            <option value="high">Alta</option>
+            <option value="low" hidden>Baja</option>
+            {/* <option value="medium">Media</option> */}
+            {/* <option value="high">Alta</option> */}
           </select>
 
           <button type="submit" className={styles.closeButton}>

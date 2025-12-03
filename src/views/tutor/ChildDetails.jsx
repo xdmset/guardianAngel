@@ -14,6 +14,7 @@ import EditNoteModal from '../../components/childDetails/EditNoteModal';
 import HealthSection from '../../components/childDetails/HealthSection';
 import SuggestionsSection from '../../components/childDetails/SuggestionsSection';
 import Horario from '../../components/childDetails/Horario';
+import MedicinesSection from '../../components/childDetails/MedicinesSection';
 
 const ChildDetails = () => {
   // Estados y variables
@@ -232,8 +233,9 @@ const ChildDetails = () => {
         {/* ------------- ROW 3 : ACTIVIDADES + ALIMENTACIÓN ------------- */}
         <div className={styles.row}>
 
-          <div className={styles.colLeft}>
-            <Horario childId={child.id_child} />
+          {/* --- card de Medicamentos --- */}
+          <div className={`${styles.colLeft} `}>
+            <MedicinesSection childId={child.id_child} />
           </div>
 
           {/* Seccion de sugestion para recomendaciones */}
@@ -241,6 +243,11 @@ const ChildDetails = () => {
             <SuggestionsSection smartwatchId={child.id_smartwatch} />
           </div>
 
+        </div>
+
+        {/* ------------- ROW 4 : SCHEDULE ------------- */}
+        <div className={styles.rowFull}>
+          <Horario childId={child.id_child} />
         </div>
 
       </main>
