@@ -1,12 +1,20 @@
 import React from 'react';
 import { AuthProvider } from './context/AuthContext';
+import { NotificationProvider } from './context/NotificationContext'; // 1. Importar Contexto
 import AppRouter from './router/AppRouter';
-import './App.css'; //para poder usar variables  root  en todo
+import AlertModal from './components/shared/AlertModal'; // 2. Importar Modal
+import './App.css'; 
 
 function App() {
   return (
     <AuthProvider>
-      <AppRouter />
+      
+      <NotificationProvider> 
+        <AppRouter />
+        
+        
+        <AlertModal /> 
+      </NotificationProvider>
     </AuthProvider>
   );
 }

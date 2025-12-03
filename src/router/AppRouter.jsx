@@ -9,6 +9,7 @@ import CaregiverDashboard from '../views/caregiver/CaregiverDashboard';
 import ChildDetails from '../views/caregiver/ChildDetails';
 import AllChildren from '../views/caregiver/AllChildren';
 import Index from '../views/caregiver/Index';
+import AlertsPage from '../views/caregiver/AlertsPage'; // <-- IMPORTANTE: Nueva vista de alertas
 
 import SmartwatchManagerPage from '../views/admin/SmartwatchManagerPage';
 import TutorIndex from '../views/tutor/Index';
@@ -18,7 +19,7 @@ import TutorDashboard from '../views/tutor/TutorDashboard';
 import RegistrationPage from '../views/admin/RegistrationPage';
 import ChildManager from '../views/admin/ChildManager';
 import ScheduleManager from '../views/admin/ScheduleManager';
-import Dashboard from '../views/admin/AdminDashboard';
+// import Dashboard from '../views/admin/AdminDashboard';
 import Dashboard2 from '../views/admin/AdminDashboard';
 
 
@@ -31,17 +32,12 @@ const AppRouter = () => {
       case 'admin': return '/admin/dashboard';
       case 'index': return '/cuidador/index';
       case 'tutor': return '/tutor/index';
-
       case 'caregiver': return '/cuidador/index';
-      // case 'caregiver': return '/cuidador/dashboard';
-
-
       default: return '/login';
     }
   };
 
-  console.log("ROLE ACTUAL:", user?.role);
-
+  // console.log("ROLE ACTUAL:", user?.role);
 
   return (
     <>
@@ -51,24 +47,27 @@ const AppRouter = () => {
 
         {user && (
           <>
+            {/* --- RUTAS CUIDADOR --- */}
             <Route path="/cuidador/index" element={<Index />} />
             <Route path="/cuidador/dashboard" element={<CaregiverDashboard />} />
             <Route path="/cuidador/todos" element={<AllChildren />} />
-
+            
+            {/* Nueva ruta para el historial de alertas */}
+            <Route path="/cuidador/alertas" element={<AlertsPage />} />
 
             <Route path="/niño/:id" element={<ChildDetails />} />
 
+            {/* --- RUTAS ADMIN --- */}
             <Route path="/admin/dashboard" element={<Dashboard2 />} />
             <Route path="/admin/smartwatches" element={<SmartwatchManagerPage />} />
             <Route path="/admin/registration" element={<RegistrationPage />} />
             <Route path="/admin/children" element={<ChildManager />} />
             <Route path="/admin/schedule" element={<ScheduleManager />} />
 
+            {/* --- RUTAS TUTOR --- */}
             <Route path="/tutor/index" element={<TutorIndex />} />
             <Route path="/tutor/niño/:id" element={<ChildDetailsTutor />} />
             <Route path="/tutor/dashboard" element={<TutorDashboard />} />
-
-
           </>
         )}
 

@@ -4,7 +4,9 @@ const api = {
 
   ep: {
     children: 'children/',
-    // othe endpoints se agregan aca
+    caregiver: 'caregiver/',            // Para listar los niños del cuidador
+    smartwatch: 'readings/smartwatch/', // Para obtener lecturas del reloj
+    analyze: 'analyze-reading',         // Para el análisis de IA
   }
 };
 

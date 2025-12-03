@@ -26,9 +26,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px; /* Agregué un poco de padding lateral para seguridad */
 }
 
-/* ----------------------- Brand ----------------------- */
+/* ----------------------- Brand & Logo ----------------------- */
 .brand {
   font-size: 1.6rem;
   font-weight: 800;
@@ -39,9 +40,17 @@
 
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 10px; /* Espacio entre el logo y el texto */
 
   transition: var(--transition);
+}
+
+/* ESTA ES LA CLASE QUE ARREGLA EL TAMAÑO */
+.logo {
+  height: 45px;         /* Ajusta el logo a la altura de la barra */
+  width: auto;          /* Mantiene la proporción correcta */
+  object-fit: contain;  /* Asegura que la imagen se vea completa */
+  display: block;       /* Asegura que el navegador la renderice como bloque */
 }
 
 .brand:hover {
@@ -55,7 +64,7 @@
   border: none;
   color: white;
 
-  display: none;
+  display: none; /* Solo visible en móvil */
   font-size: 2rem;
 
   cursor: pointer;
@@ -107,24 +116,124 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* ----------------------- Campanita de notificaciones ----------------------- */
+.notificationButton {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 0.6rem;
+  border-radius: 50%;
+  cursor: pointer;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: var(--transition);
+}
+
+.notificationButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.bellIcon {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.bellIconAlert {
+  animation: ringBell 1s ease-in-out infinite;
+  color: #fc8181;
+}
+
+@keyframes ringBell {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(-15deg); }
+  20%, 40% { transform: rotate(15deg); }
+  50% { transform: rotate(0deg); }
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  
+  background: #fc8181;
+  color: white;
+  
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-size: 0.7rem;
+  font-weight: bold;
+  
+  animation: pulseBadge 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
 /* ----------------------- Logout ----------------------- */
 .logoutButton {
-  background: var(--accent);
-  color: white;
-
+  background: var(--secondary);
   border: none;
-  border-radius: 16px;
-  padding: 0.55rem 1.3rem;
-  font-weight: 700;
+  padding: 0.45rem 0.7rem;
+  border-radius: 12px;
   cursor: pointer;
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 3px 10px rgba(0,0,0,0.10);
   transition: var(--transition);
 }
 
 .logoutButton:hover {
-  background: var(--accent-dark);
-  transform: translateY(-3px);
+  background: var(--secondary-dark);
+  transform: translateY(-2px);
+}
+
+.logoutIcon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* ----------------------- Botón estilo navLink ----------------------- */
+button.navLink {
+  border: none;
+  background: rgba(255, 255, 255, 0);
+  cursor: pointer;
+
+  padding: 0.5rem 1.1rem;
+  border-radius: 5px;
+
+  font-weight: 600;
+  color: #fafafa;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+}
+
+button.navLink:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+  color: var(--text-color);
+}
+
+button.navLink.active {
+  color: white;
 }
 
 /* ----------------------- Responsive ----------------------- */
@@ -167,68 +276,9 @@
   .logoutButton {
     width: 100%;
   }
-}
-/* ----------------------- Fin Navbar ----------------------- */
-
-/* BOTON DE LOGOUT */
-.logoutButton {
-  background: var(--secondary); /* azul bebé */
-  border: none;
-  padding: 0.45rem 0.7rem;
-  border-radius: 12px;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 3px 10px rgba(0,0,0,0.10);
-  transition: var(--transition);
-}
-
-.logoutButton:hover {
-  background: var(--secondary-dark);
-  transform: translateY(-2px);
-}
-
-.logoutIcon {
-  width: 26px;
-  height: 26px;
-  object-fit: contain;
-  filter: brightness(0) invert(1); /* si quieres la imagen blanca */
-}
-
-/* BOTON DE MI NIÑO */
-/* -------- Ajuste para botones que usen navLink -------- */
-button.navLink {
-  border: none;
-  background: rgba(255, 255, 255, 0);
-  cursor: pointer;
-
-  /* Para que no cambie el tamaño */
-  padding: 0.5rem 1.1rem;
-  border-radius: 5px;
-
-  /* Hereda la misma estética */
-  font-weight: 600;
-  color: #fafafa;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  height: 100%;
-
-}
-
-/* Hover igual que un <a> */
-button.navLink:hover {
-  background: var(--accent);
-  transform: translateY(-2px);
-  color: var(--text-color);
-}
-
-/* Activo igual */
-button.navLink.active {
-  /* background: var(--primary); */
-  color: white;
- 
+  
+  .notificationButton {
+    width: 100%;
+    border-radius: 12px;
+  }
 }
