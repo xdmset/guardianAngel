@@ -6,8 +6,6 @@ const Index = () => {
   return (
     <div className="index">
 
-      
-
       {/* HERO */}
       <section className="hero">
         <div className="container">
@@ -27,10 +25,10 @@ const Index = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             Administra y supervisa el bienestar de los pequeños de forma sencilla,
-            visual y siempre accesible. 
+            visual y siempre accesible.
           </motion.p>
 
-          
+
         </div>
       </section>
 

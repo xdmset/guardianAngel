@@ -300,6 +300,8 @@
     cursor: pointer;
     transition: var(--transition);
     color: var(--text-color);
+
+
 }
 
 .btn-secondary:hover {

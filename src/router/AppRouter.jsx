@@ -18,6 +18,8 @@ import TutorDashboard from '../views/tutor/TutorDashboard';
 import RegistrationPage from '../views/admin/RegistrationPage';
 import ChildManager from '../views/admin/ChildManager';
 import ScheduleManager from '../views/admin/ScheduleManager';
+import Dashboard from '../views/admin/AdminDashboard';
+import Dashboard2 from '../views/admin/AdminDashboard';
 
 
 const AppRouter = () => {
@@ -56,6 +58,7 @@ const AppRouter = () => {
 
             <Route path="/niño/:id" element={<ChildDetails />} />
 
+            <Route path="/admin/dashboard" element={<Dashboard2 />} />
             <Route path="/admin/smartwatches" element={<SmartwatchManagerPage />} />
             <Route path="/admin/registration" element={<RegistrationPage />} />
             <Route path="/admin/children" element={<ChildManager />} />

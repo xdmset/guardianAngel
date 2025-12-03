@@ -102,7 +102,7 @@ const SmartwatchFormModal = ({ show, loading, formData, onClose, onSubmit, onCha
                         <button
                             onClick={onSubmit}
                             disabled={loading}
-                            className="btn-submit"
+                            className="btn-secondary"
                         >
                             {loading ? 'Guardando...' : isEdit ? 'Actualizar' : 'Registrar'}
                         </button>
